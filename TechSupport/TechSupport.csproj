@@ -196,8 +196,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RoleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\Startup.Role.cs" />
     <Compile Include="AspNetRole.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
@@ -271,6 +273,14 @@
     <Content Include="Model2.edmx.diagram">
       <DependentUpon>Model2.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\TechSupport20190613121821 - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\TechSupport20190613121821 - FTP %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\TechSupport20190613121821 - FTP %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\TechSupport20190613121821 - FTP %285%29.pubxml" />
+    <None Include="Properties\PublishProfiles\TechSupport20190613121821 - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\TechSupport20190613121821 - Web Deploy %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\TechSupport20190613121821 - Web Deploy %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\TechSupport20190613121821 - Web Deploy %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\TechSupport20190613121821.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
