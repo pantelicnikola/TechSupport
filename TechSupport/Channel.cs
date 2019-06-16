@@ -12,28 +12,26 @@ namespace TechSupport
     using System;
     using System.Collections.Generic;
     
-    public partial class Question
+    public partial class Channel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Question()
+        public Channel()
         {
-            this.Answers = new HashSet<Answer>();
+            this.Questions = new HashSet<Question>();
+            this.AspNetUsers = new HashSet<AspNetUser>();
         }
     
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Text { get; set; }
-        public string Image { get; set; }
-        public int Category { get; set; }
-        public string Author { get; set; }
+        public string Name { get; set; }
         public System.DateTime TimeCreated { get; set; }
-        public Nullable<System.DateTime> TimeLastLocked { get; set; }
-        public bool LockoutEnabled { get; set; }
-        public int Channel { get; set; }
-        public bool Locked { get; set; }
+        public string Creator { get; set; }
+        public bool Closed { get; set; }
+        public int Price { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Answer> Answers { get; set; }
-        public virtual Channel Channel1 { get; set; }
+        public virtual ICollection<Question> Questions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }
