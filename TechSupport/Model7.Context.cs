@@ -16,7 +16,7 @@ namespace TechSupport
     public partial class TechSupport20190613121821_dbEntities : DbContext
     {
         public TechSupport20190613121821_dbEntities()
-            : base("name=TechSupport20190613121821_dbEntities")
+            : base("name=TechSupport20190613121821_dbEntities3")
         {
         }
     

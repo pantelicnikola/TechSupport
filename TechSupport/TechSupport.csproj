@@ -194,7 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Answer.cs">
-      <DependentUpon>Model6.tt</DependentUpon>
+      <DependentUpon>Model2local.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -204,19 +204,19 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Startup.Role.cs" />
     <Compile Include="AspNetRole.cs">
-      <DependentUpon>Model6.tt</DependentUpon>
+      <DependentUpon>Model2local.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUser.cs">
-      <DependentUpon>Model6.tt</DependentUpon>
+      <DependentUpon>Model2local.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserClaim.cs">
-      <DependentUpon>Model6.tt</DependentUpon>
+      <DependentUpon>Model2local.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserLogin.cs">
-      <DependentUpon>Model6.tt</DependentUpon>
+      <DependentUpon>Model2local.tt</DependentUpon>
     </Compile>
     <Compile Include="Channel.cs">
-      <DependentUpon>Model6.tt</DependentUpon>
+      <DependentUpon>Model2local.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswersController.cs" />
@@ -225,33 +225,48 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="C__MigrationHistory.cs">
-      <DependentUpon>Model6.tt</DependentUpon>
+      <DependentUpon>Model2local.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model6.Context.cs">
+    <Compile Include="Model2local.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model6.Context.tt</DependentUpon>
+      <DependentUpon>Model2local.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model6.cs">
+    <Compile Include="Model2local.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model6.tt</DependentUpon>
+      <DependentUpon>Model2local.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model6.Designer.cs">
+    <Compile Include="Model2local.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model6.edmx</DependentUpon>
+      <DependentUpon>Model2local.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model7.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model7.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model7.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model7.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model7.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model7.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question.cs">
-      <DependentUpon>Model6.tt</DependentUpon>
+      <DependentUpon>Model2local.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -262,15 +277,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Model6.Context.tt">
+    <Content Include="Model2local.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model6.edmx</DependentUpon>
-      <LastGenOutput>Model6.Context.cs</LastGenOutput>
+      <DependentUpon>Model2local.edmx</DependentUpon>
+      <LastGenOutput>Model2local.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model6.tt">
+    <Content Include="Model2local.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model6.edmx</DependentUpon>
-      <LastGenOutput>Model6.cs</LastGenOutput>
+      <DependentUpon>Model2local.edmx</DependentUpon>
+      <LastGenOutput>Model2local.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model7.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model7.edmx</DependentUpon>
+      <LastGenOutput>Model7.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model7.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model7.edmx</DependentUpon>
+      <LastGenOutput>Model7.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -279,12 +304,19 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Model6.edmx">
+    <EntityDeploy Include="Model7.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model6.Designer.cs</LastGenOutput>
+      <LastGenOutput>Model7.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Model6.edmx.diagram">
-      <DependentUpon>Model6.edmx</DependentUpon>
+    <Content Include="Model7.edmx.diagram">
+      <DependentUpon>Model7.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Model2local.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model2local.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Model2local.edmx.diagram">
+      <DependentUpon>Model2local.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\TechSupport20190613121821 - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\TechSupport20190613121821 - FTP %283%29.pubxml" />

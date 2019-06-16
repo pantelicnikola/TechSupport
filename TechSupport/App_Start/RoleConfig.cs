@@ -32,7 +32,7 @@ namespace TechSupport.App_Start
             {
                 ApplicationUser administrator = new ApplicationUser()
                 {
-                    UserName = "admin",
+                    UserName = "admin@admin.com",
                     Email = "admin@admin.com"
                 };
                 // pravi admin user-a

@@ -64,7 +64,7 @@ namespace TechSupport.Controllers
                 : "";
             var db = new TechSupport20190613121821_dbEntities();
             var userId = User.Identity.GetUserId();
-            var user = db.AspNetUsers.First(i => i.Id == userId);
+            var user = db.AspNetUsers.FirstOrDefault(i => i.Id == userId);
             var model = new IndexViewModel
             {
                 FirstName = user.FirstName,
