@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TechSupport;
+using TechSupport.Models;
 
 namespace TechSupport.Controllers
 {
@@ -19,7 +20,18 @@ namespace TechSupport.Controllers
         public ActionResult Index()
         {
             var questions = db.Questions.Include(q => q.Channel1).Include(q => q.Category1);
-            return View(questions.ToList());
+            List<QuestionsIndexViewModel> questionList = new List<QuestionsIndexViewModel>();
+            foreach (var question in questions)
+            {
+                var user = db.AspNetUsers.FirstOrDefault(usr => question.Author == usr.Id);
+                QuestionsIndexViewModel model = new QuestionsIndexViewModel()
+                {
+                    Question = question,
+                    AuthorName = user.FirstName + user.LastName
+                };
+                questionList.Add(model);
+            }
+            return View(questionList);
         }
 
         // GET: Questions/Details/5
@@ -137,6 +149,15 @@ namespace TechSupport.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Close(int id)
+        {
+            Question question = db.Questions.Find(id);
+            question.Locked = true;
+            question.TimeLastLocked = DateTime.Now;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

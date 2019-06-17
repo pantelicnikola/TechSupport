@@ -56,6 +56,7 @@ namespace TechSupport.Controllers
                 channel.Closed = false;
                 channel.Creator = User.Identity.GetUserId();
                 channel.TimeCreated = DateTime.Now;
+                channel.Price = 0;
                 db.Channels.Add(channel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
