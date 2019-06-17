@@ -26,7 +26,7 @@ namespace TechSupport
         public System.DateTime TimeCreated { get; set; }
         public string Creator { get; set; }
         public bool Closed { get; set; }
-        public int Price { get; set; }
+        public Nullable<int> Price { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

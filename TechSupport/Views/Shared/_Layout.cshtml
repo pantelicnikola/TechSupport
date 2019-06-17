@@ -36,6 +36,7 @@
                         if (User.IsInRole("user"))
                         {
                             <li>@Html.ActionLink("Create Question", "Create", "Questions")</li>
+                            <li>@Html.ActionLink("Create Channel", "Create", "Channels")</li>
                         }
                         if (User.IsInRole("admin"))
                         {

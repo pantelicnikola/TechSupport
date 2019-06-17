@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TechSupport20190613121821_dbModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TechSupport20190613121821_dbModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -101,12 +101,12 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="TimeCreated" Type="datetime" Nullable="false" />
           <Property Name="Creator" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Closed" Type="bit" Nullable="false" />
-          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="Price" Type="int" />
         </EntityType>
         <EntityType Name="Questions">
           <Key>
@@ -337,8 +337,7 @@
             <End Role="Questions" EntitySet="Questions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TechSupport20190613121821_dbModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -441,7 +440,7 @@
           <Property Name="TimeCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Creator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Closed" Type="Boolean" Nullable="false" />
-          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Int32" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Channel_AspNetUsers" FromRole="Channels" ToRole="AspNetUsers" />
           <NavigationProperty Name="Questions" Relationship="Self.FK_Questions_Channel" FromRole="Channels" ToRole="Questions" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.AgentChannel" FromRole="Channels" ToRole="AspNetUsers" />

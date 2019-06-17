@@ -11,121 +11,115 @@ using TechSupport;
 
 namespace TechSupport.Controllers
 {
-    public class QuestionsController : Controller
+    public class ChannelsController : Controller
     {
         private TechSupport20190613121821_dbEntities db = new TechSupport20190613121821_dbEntities();
 
-        // GET: Questions
+        // GET: Channels
         public ActionResult Index()
         {
-            var questions = db.Questions.Include(q => q.Channel1).Include(q => q.Category1);
-            return View(questions.ToList());
+            var channels = db.Channels.Include(c => c.AspNetUser);
+            return View(channels.ToList());
         }
 
-        // GET: Questions/Details/5
+        // GET: Channels/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Question question = db.Questions.Find(id);
-            if (question == null)
+            Channel channel = db.Channels.Find(id);
+            if (channel == null)
             {
                 return HttpNotFound();
             }
-            return View(question);
+            return View(channel);
         }
 
-        // GET: Questions/Create
+        // GET: Channels/Create
         public ActionResult Create()
         {
-            ViewBag.Channel = new SelectList(db.Channels, "Id", "Name");
-            ViewBag.Category = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.Creator = new SelectList(db.AspNetUsers, "Id", "Email");
             return View();
         }
 
-        // POST: Questions/Create
+        // POST: Channels/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Text,Image,Category,Author,TimeCreated,TimeLastLocked,LockoutEnabled,Channel,Locked")] Question question)
+        public ActionResult Create([Bind(Include = "Id,Name,TimeCreated,Creator,Closed,Price")] Channel channel)
         {
             if (ModelState.IsValid)
             {
-                question.Author = User.Identity.GetUserId();
-                question.TimeCreated = DateTime.Now;
-                question.Locked = false;
-                question.LockoutEnabled = true;
-
-                db.Questions.Add(question);
+                channel.Closed = false;
+                channel.Creator = User.Identity.GetUserId();
+                channel.TimeCreated = DateTime.Now;
+                db.Channels.Add(channel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Channel = new SelectList(db.Channels, "Id", "Name", question.Channel);
-            ViewBag.Category = new SelectList(db.Categories, "Id", "Name", question.Category);
-            return View(question);
+            ViewBag.Creator = new SelectList(db.AspNetUsers, "Id", "Email", channel.Creator);
+            return View(channel);
         }
 
-        // GET: Questions/Edit/5
+        // GET: Channels/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Question question = db.Questions.Find(id);
-            if (question == null)
+            Channel channel = db.Channels.Find(id);
+            if (channel == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Channel = new SelectList(db.Channels, "Id", "Name", question.Channel);
-            ViewBag.Category = new SelectList(db.Categories, "Id", "Name", question.Category);
-            return View(question);
+            ViewBag.Creator = new SelectList(db.AspNetUsers, "Id", "Email", channel.Creator);
+            return View(channel);
         }
 
-        // POST: Questions/Edit/5
+        // POST: Channels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Text,Image,Category,Author,TimeCreated,TimeLastLocked,LockoutEnabled,Channel,Locked")] Question question)
+        public ActionResult Edit([Bind(Include = "Id,Name,TimeCreated,Creator,Closed,Price")] Channel channel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(question).State = EntityState.Modified;
+                db.Entry(channel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Channel = new SelectList(db.Channels, "Id", "Name", question.Channel);
-            ViewBag.Category = new SelectList(db.Categories, "Id", "Name", question.Category);
-            return View(question);
+            ViewBag.Creator = new SelectList(db.AspNetUsers, "Id", "Email", channel.Creator);
+            return View(channel);
         }
 
-        // GET: Questions/Delete/5
+        // GET: Channels/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Question question = db.Questions.Find(id);
-            if (question == null)
+            Channel channel = db.Channels.Find(id);
+            if (channel == null)
             {
                 return HttpNotFound();
             }
-            return View(question);
+            return View(channel);
         }
 
-        // POST: Questions/Delete/5
+        // POST: Channels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Question question = db.Questions.Find(id);
-            db.Questions.Remove(question);
+            Channel channel = db.Channels.Find(id);
+            db.Channels.Remove(channel);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

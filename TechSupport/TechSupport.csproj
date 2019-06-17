@@ -225,6 +225,7 @@
     <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\AspNetUsersController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\ChannelsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
@@ -400,6 +401,11 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Channels\Create.cshtml" />
+    <Content Include="Views\Channels\Delete.cshtml" />
+    <Content Include="Views\Channels\Details.cshtml" />
+    <Content Include="Views\Channels\Edit.cshtml" />
+    <Content Include="Views\Channels\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
