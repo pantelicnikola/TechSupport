@@ -194,7 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Answer.cs">
-      <DependentUpon>Model8.tt</DependentUpon>
+      <DependentUpon>Model3local.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -204,47 +204,51 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Startup.Role.cs" />
     <Compile Include="AspNetRole.cs">
-      <DependentUpon>Model8.tt</DependentUpon>
+      <DependentUpon>Model3local.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUser.cs">
-      <DependentUpon>Model8.tt</DependentUpon>
+      <DependentUpon>Model3local.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserClaim.cs">
-      <DependentUpon>Model8.tt</DependentUpon>
+      <DependentUpon>Model3local.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserLogin.cs">
-      <DependentUpon>Model8.tt</DependentUpon>
+      <DependentUpon>Model3local.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Category.cs">
+      <DependentUpon>Model3local.tt</DependentUpon>
     </Compile>
     <Compile Include="Channel.cs">
-      <DependentUpon>Model8.tt</DependentUpon>
+      <DependentUpon>Model3local.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\AspNetUsersController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="C__MigrationHistory.cs">
-      <DependentUpon>Model8.tt</DependentUpon>
+      <DependentUpon>Model3local.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model2local.Context.cs">
+    <Compile Include="Model3local.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model2local.Context.tt</DependentUpon>
+      <DependentUpon>Model3local.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model2local.cs">
+    <Compile Include="Model3local.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model2local.tt</DependentUpon>
+      <DependentUpon>Model3local.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model2local.Designer.cs">
+    <Compile Include="Model3local.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model2local.edmx</DependentUpon>
+      <DependentUpon>Model3local.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model8.Context.cs">
       <AutoGen>True</AutoGen>
@@ -266,7 +270,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question.cs">
-      <DependentUpon>Model8.tt</DependentUpon>
+      <DependentUpon>Model3local.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -277,15 +281,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Model2local.Context.tt">
+    <Content Include="Model3local.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model2local.edmx</DependentUpon>
-      <LastGenOutput>Model2local.Context.cs</LastGenOutput>
+      <DependentUpon>Model3local.edmx</DependentUpon>
+      <LastGenOutput>Model3local.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model2local.tt">
+    <Content Include="Model3local.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model2local.edmx</DependentUpon>
-      <LastGenOutput>Model2local.cs</LastGenOutput>
+      <DependentUpon>Model3local.edmx</DependentUpon>
+      <LastGenOutput>Model3local.cs</LastGenOutput>
     </Content>
     <Content Include="Model8.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -304,19 +308,19 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Model2local.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model2local.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Model2local.edmx.diagram">
-      <DependentUpon>Model2local.edmx</DependentUpon>
-    </Content>
     <EntityDeploy Include="Model8.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model8.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Model8.edmx.diagram">
       <DependentUpon>Model8.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Model3local.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model3local.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Model3local.edmx.diagram">
+      <DependentUpon>Model3local.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\TechSupport20190613121821 - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\TechSupport20190613121821 - FTP %283%29.pubxml" />
@@ -381,16 +385,21 @@
     <Content Include="Views\AspNetUsers\Details.cshtml" />
     <Content Include="Views\AspNetUsers\Edit.cshtml" />
     <Content Include="Views\AspNetUsers\Index.cshtml" />
-    <Content Include="Views\Questions\Create.cshtml" />
-    <Content Include="Views\Questions\Delete.cshtml" />
-    <Content Include="Views\Questions\Details.cshtml" />
-    <Content Include="Views\Questions\Edit.cshtml" />
-    <Content Include="Views\Questions\Index.cshtml" />
     <Content Include="Views\Answers\Create.cshtml" />
     <Content Include="Views\Answers\Delete.cshtml" />
     <Content Include="Views\Answers\Details.cshtml" />
     <Content Include="Views\Answers\Edit.cshtml" />
     <Content Include="Views\Answers\Index.cshtml" />
+    <Content Include="Views\Questions\Create.cshtml" />
+    <Content Include="Views\Questions\Delete.cshtml" />
+    <Content Include="Views\Questions\Details.cshtml" />
+    <Content Include="Views\Questions\Edit.cshtml" />
+    <Content Include="Views\Questions\Index.cshtml" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
