@@ -50,6 +50,7 @@ namespace TechSupport.Controllers
         }
 
         // GET: Questions/Create
+        [Authorize(Roles = "user")]
         public ActionResult Create()
         {
             ViewBag.Channel = new SelectList(db.Channels, "Id", "Name");
@@ -62,6 +63,7 @@ namespace TechSupport.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "user")]
         public ActionResult Create([Bind(Include = "Id,Title,Text,Image,Category,Author,TimeCreated,TimeLastLocked,LockoutEnabled,Channel,Locked")] Question question)
         {
             if (ModelState.IsValid)
@@ -82,41 +84,42 @@ namespace TechSupport.Controllers
         }
 
         // GET: Questions/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Question question = db.Questions.Find(id);
-            if (question == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Channel = new SelectList(db.Channels, "Id", "Name", question.Channel);
-            ViewBag.Category = new SelectList(db.Categories, "Id", "Name", question.Category);
-            return View(question);
-        }
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Question question = db.Questions.Find(id);
+        //    if (question == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.Channel = new SelectList(db.Channels, "Id", "Name", question.Channel);
+        //    ViewBag.Category = new SelectList(db.Categories, "Id", "Name", question.Category);
+        //    return View(question);
+        //}
 
-        // POST: Questions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Text,Image,Category,Author,TimeCreated,TimeLastLocked,LockoutEnabled,Channel,Locked")] Question question)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(question).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.Channel = new SelectList(db.Channels, "Id", "Name", question.Channel);
-            ViewBag.Category = new SelectList(db.Categories, "Id", "Name", question.Category);
-            return View(question);
-        }
+        //// POST: Questions/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "Id,Title,Text,Image,Category,Author,TimeCreated,TimeLastLocked,LockoutEnabled,Channel,Locked")] Question question)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(question).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.Channel = new SelectList(db.Channels, "Id", "Name", question.Channel);
+        //    ViewBag.Category = new SelectList(db.Categories, "Id", "Name", question.Category);
+        //    return View(question);
+        //}
 
         // GET: Questions/Delete/5
+        [Authorize(Roles = "user, admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -132,6 +135,7 @@ namespace TechSupport.Controllers
         }
 
         // POST: Questions/Delete/5
+        [Authorize(Roles = "user, admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -151,11 +155,21 @@ namespace TechSupport.Controllers
             base.Dispose(disposing);
         }
 
+        [Authorize(Roles = "user")]
         public ActionResult Close(int id)
         {
             Question question = db.Questions.Find(id);
             question.Locked = true;
             question.TimeLastLocked = DateTime.Now;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult Open(int id)
+        {
+            Question question = db.Questions.Find(id);
+            question.Locked = false;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
