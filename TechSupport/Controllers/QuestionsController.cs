@@ -27,7 +27,8 @@ namespace TechSupport.Controllers
                 QuestionsIndexViewModel model = new QuestionsIndexViewModel()
                 {
                     Question = question,
-                    AuthorName = user.FirstName + user.LastName
+                    AuthorName = user.FirstName + " " + user.LastName,
+                    AnswerCount = question.Answers.Count()
                 };
                 questionList.Add(model);
             }

@@ -5,6 +5,15 @@
     ViewBag.Title = "Index";
 }
 
+<style type="text/css">
+    .True {
+        background-color: crimson;
+    }
+    .False {
+        background-color: black;
+    }
+</style>
+
 <h2>Index</h2>
 @if (User.IsInRole("user"))
 {
@@ -18,60 +27,25 @@
             @Html.DisplayNameFor(model => model.Question.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Question.Text)
+            @Html.DisplayNameFor(model => model.AuthorName)
         </th>
+        
         <th>
-            @Html.DisplayNameFor(model => model.Question.Image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Question.Author)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Question.TimeCreated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Question.TimeLastLocked)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Question.Locked)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Question.Channel1.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Question.Category1.Name)
+            @Html.DisplayNameFor(model => model.AnswerCount)
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    <tr class="@item.Question.Locked">
         <td>
             @Html.DisplayFor(modelItem => item.Question.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Question.Text)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Question.Image)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AuthorName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Question.TimeCreated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Question.TimeLastLocked)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Question.Locked)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Question.Channel1.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Question.Category1.Name)
+            @Html.DisplayFor(modelItem => item.AnswerCount)
         </td>
         <td>
             @Html.ActionLink("Details ", "Details", new { id=item.Question.Id })
@@ -89,6 +63,13 @@
                     @Html.ActionLink("Open ", "Open", new { id = item.Question.Id });
                 }
                 @Html.ActionLink("Delete ", "Delete", new { id = item.Question.Id })
+            }
+            @if (User.IsInRole("agent"))
+            {
+                if (item.Question.Locked)
+                {
+                    @Html.ActionLink("Open ", "Open", new { id = item.Question.Id });
+                }
             }
         </td>
     </tr>
