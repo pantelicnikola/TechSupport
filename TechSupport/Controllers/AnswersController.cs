@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -37,11 +38,12 @@ namespace TechSupport.Controllers
         }
 
         // GET: Answers/Create
-        public ActionResult Create()
+        public ActionResult Create(int Id)
         {
             ViewBag.ReplyOn = new SelectList(db.Answers, "Id", "Author");
             ViewBag.Author = new SelectList(db.AspNetUsers, "Id", "Email");
             ViewBag.Question = new SelectList(db.Questions, "Id", "Title");
+            TempData["QuestionToAnswer"] = db.Questions.FirstOrDefault(question => question.Id == Id);
             return View();
         }
 
@@ -50,10 +52,16 @@ namespace TechSupport.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Question,ReplyOn,Author,TimeCreated,Text,Upvotes,Downvotes")] Answer answer)
+        public ActionResult Create([Bind(Include = "Text")] Answer answer)
         {
+            Question question = (Question)TempData["QuestionToAnswer"];
             if (ModelState.IsValid)
             {
+                answer.TimeCreated = DateTime.Now;
+                answer.Upvotes = 0;
+                answer.Downvotes = 0;
+                answer.Question = question.Id;
+                answer.Author = User.Identity.GetUserId();
                 db.Answers.Add(answer);
                 db.SaveChanges();
                 return RedirectToAction("Index");

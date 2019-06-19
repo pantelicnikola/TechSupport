@@ -80,6 +80,10 @@
                     @Html.ActionLink("Open  ", "Open", new { id = item.Question.Id });
                 }
             }
+            @if (User.Identity.IsAuthenticated)
+            {
+                @Html.ActionLink("Answer  ", "Create", "Answers", new { Id = item.Question.Id }, null);
+            }
         </td>
     </tr>
 }
