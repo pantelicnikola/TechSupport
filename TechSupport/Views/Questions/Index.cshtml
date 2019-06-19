@@ -6,11 +6,19 @@
 }
 
 <style type="text/css">
-    .True {
+    .true {
         background-color: crimson;
+        color : white;
     }
-    .False {
-        background-color: black;
+    .false {
+        background-color: white;
+    }
+    .true .action a {
+        color : white;
+        text-decoration : none;
+    }
+    .true .action a:hover {
+        color : cadetblue;
     }
 </style>
 
@@ -29,15 +37,16 @@
         <th>
             @Html.DisplayNameFor(model => model.AuthorName)
         </th>
-        
         <th>
             @Html.DisplayNameFor(model => model.AnswerCount)
         </th>
-        <th></th>
+        <th>
+            Action
+        </th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr class="@item.Question.Locked">
+    <tr class="@item.Question.Locked.ToString().ToLower()">
         <td>
             @Html.DisplayFor(modelItem => item.Question.Title)
         </td>
@@ -47,32 +56,31 @@
         <td>
             @Html.DisplayFor(modelItem => item.AnswerCount)
         </td>
-        <td>
-            @Html.ActionLink("Details ", "Details", new { id=item.Question.Id })
+        <td class="action">
+            @Html.ActionLink("Details  ", "Details", new { id=item.Question.Id })
             @if (User.Identity.GetUserId() == item.Question.Author)
             {
                 if(!item.Question.Locked) {
-                    @Html.ActionLink("Close ", "Close", new { id = item.Question.Id });
+                    @Html.ActionLink("Close  ", "Close", new { id = item.Question.Id });
                 }
-                @Html.ActionLink("Delete ", "Delete", new { id = item.Question.Id })  
+                @Html.ActionLink("Delete  ", "Delete", new { id = item.Question.Id })  
             }
             @if (User.IsInRole("admin"))
             {
                 if (item.Question.Locked)
                 {
-                    @Html.ActionLink("Open ", "Open", new { id = item.Question.Id });
+                    @Html.ActionLink("Open  ", "Open", new { id = item.Question.Id });
                 }
-                @Html.ActionLink("Delete ", "Delete", new { id = item.Question.Id })
+                @Html.ActionLink("Delete  ", "Delete", new { id = item.Question.Id })
             }
             @if (User.IsInRole("agent"))
             {
                 if (item.Question.Locked)
                 {
-                    @Html.ActionLink("Open ", "Open", new { id = item.Question.Id });
+                    @Html.ActionLink("Open  ", "Open", new { id = item.Question.Id });
                 }
             }
         </td>
     </tr>
 }
-
 </table>
