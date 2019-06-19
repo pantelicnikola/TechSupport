@@ -19,6 +19,26 @@ namespace TechSupport.Controllers
         // GET: Questions
         public ActionResult Index()
         {
+            ViewBag.Category = new SelectList(db.Categories, "Id", "Name");
+            var questions = db.Questions.Include(q => q.Channel1).Include(q => q.Category1);
+            List<QuestionsIndexViewModel> questionList = new List<QuestionsIndexViewModel>();
+            foreach (var question in questions)
+            {
+                var user = db.AspNetUsers.FirstOrDefault(usr => question.Author == usr.Id);
+                QuestionsIndexViewModel model = new QuestionsIndexViewModel()
+                {
+                    Question = question,
+                    AuthorName = user.FirstName + " " + user.LastName,
+                    AnswerCount = question.Answers.Count()
+                };
+                questionList.Add(model);
+            }
+            return View(questionList);
+        }
+
+        [HttpPost]
+        public ActionResult Index(int CategoryId)
+        {
             var questions = db.Questions.Include(q => q.Channel1).Include(q => q.Category1);
             List<QuestionsIndexViewModel> questionList = new List<QuestionsIndexViewModel>();
             foreach (var question in questions)
@@ -144,5 +164,23 @@ namespace TechSupport.Controllers
         {
             return RedirectToAction("Create", "Answer", new { Id = id });
         }
+
+        //public ActionResult FilterQuestions()
+        //{
+        //    var questions = db.Questions.Include(q => q.Channel1).Include(q => q.Category1);
+        //    List<QuestionsIndexViewModel> questionList = new List<QuestionsIndexViewModel>();
+        //    foreach (var question in questions)
+        //    {
+        //        var user = db.AspNetUsers.FirstOrDefault(usr => question.Author == usr.Id);
+        //        QuestionsIndexViewModel model = new QuestionsIndexViewModel()
+        //        {
+        //            Question = question,
+        //            AuthorName = user.FirstName + " " + user.LastName,
+        //            AnswerCount = question.Answers.Count()
+        //        };
+        //        questionList.Add(model);
+        //    }
+        //    return View(questionList);
+        //}
     }
 }
