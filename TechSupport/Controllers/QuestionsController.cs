@@ -21,38 +21,43 @@ namespace TechSupport.Controllers
         {
             ViewBag.Category = new SelectList(db.Categories, "Id", "Name");
             var questions = db.Questions.Include(q => q.Channel1).Include(q => q.Category1);
-            List<QuestionsIndexViewModel> questionList = new List<QuestionsIndexViewModel>();
+            List<QuestionsIndexViewModelItem> questionList = new List<QuestionsIndexViewModelItem>();
             foreach (var question in questions)
             {
                 var user = db.AspNetUsers.FirstOrDefault(usr => question.Author == usr.Id);
-                QuestionsIndexViewModel model = new QuestionsIndexViewModel()
+                QuestionsIndexViewModelItem modelItem = new QuestionsIndexViewModelItem()
                 {
                     Question = question,
                     AuthorName = user.FirstName + " " + user.LastName,
                     AnswerCount = question.Answers.Count()
                 };
-                questionList.Add(model);
+                questionList.Add(modelItem);
             }
-            return View(questionList);
+            QuestionsIndexViewModel model = new QuestionsIndexViewModel();
+            model.questions = questionList;
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Index(int CategoryId)
+        public ActionResult Index(QuestionsIndexViewModel model)
         {
-            var questions = db.Questions.Include(q => q.Channel1).Include(q => q.Category1);
-            List<QuestionsIndexViewModel> questionList = new List<QuestionsIndexViewModel>();
+            ViewBag.Category = new SelectList(db.Categories, "Id", "Name");
+            var questions = db.Questions.Include(q => q.Channel1).Include(q => q.Category1).Where(question => question.Category == model.Category);
+            List<QuestionsIndexViewModelItem> questionList = new List<QuestionsIndexViewModelItem>();
             foreach (var question in questions)
             {
                 var user = db.AspNetUsers.FirstOrDefault(usr => question.Author == usr.Id);
-                QuestionsIndexViewModel model = new QuestionsIndexViewModel()
+                QuestionsIndexViewModelItem modelItem = new QuestionsIndexViewModelItem()
                 {
                     Question = question,
                     AuthorName = user.FirstName + " " + user.LastName,
                     AnswerCount = question.Answers.Count()
                 };
-                questionList.Add(model);
+                questionList.Add(modelItem);
             }
-            return View(questionList);
+            QuestionsIndexViewModel newModel = new QuestionsIndexViewModel();
+            newModel.questions = questionList;
+            return View(newModel);
         }
 
         // GET: Questions/Details/5
