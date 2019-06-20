@@ -44,6 +44,7 @@
                         if (User.IsInRole("admin"))
                         {
                             <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
+                            <li>@Html.ActionLink("Users", "Index", "AspNetUsers")</li>
 
                         }
                         if (User.IsInRole("agent"))

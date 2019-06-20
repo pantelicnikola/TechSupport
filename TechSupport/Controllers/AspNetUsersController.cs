@@ -17,23 +17,26 @@ namespace TechSupport.Controllers
         // GET: AspNetUsers
         public ActionResult Index()
         {
-            return View(db.AspNetUsers.ToList());
+            List<AspNetUser> users = db.AspNetUsers.ToList();
+            AspNetUser adminUser = db.AspNetUsers.FirstOrDefault(user => user.Email == "admin@admin.com");
+            users.Remove(adminUser);
+            return View(users);
         }
 
         // GET: AspNetUsers/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
-            if (aspNetUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(aspNetUser);
-        }
+        //public ActionResult Details(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+        //    if (aspNetUser == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(aspNetUser);
+        //}
 
         // GET: AspNetUsers/Create
         public ActionResult Create()
@@ -46,6 +49,7 @@ namespace TechSupport.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,Name")] AspNetUser aspNetUser)
         {
             if (ModelState.IsValid)
@@ -59,6 +63,7 @@ namespace TechSupport.Controllers
         }
 
         // GET: AspNetUsers/Edit/5
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -78,7 +83,8 @@ namespace TechSupport.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,Name")] AspNetUser aspNetUser)
+        [Authorize(Roles = "admin")]
+        public ActionResult Edit([Bind(Include = "Id,Email,UserName,FirstName,LastName")] AspNetUser aspNetUser)
         {
             if (ModelState.IsValid)
             {
@@ -90,30 +96,30 @@ namespace TechSupport.Controllers
         }
 
         // GET: AspNetUsers/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
-            if (aspNetUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(aspNetUser);
-        }
+        //public ActionResult Delete(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+        //    if (aspNetUser == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(aspNetUser);
+        //}
 
-        // POST: AspNetUsers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
-            db.AspNetUsers.Remove(aspNetUser);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //// POST: AspNetUsers/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(string id)
+        //{
+        //    AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+        //    db.AspNetUsers.Remove(aspNetUser);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {
