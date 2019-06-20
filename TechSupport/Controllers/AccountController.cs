@@ -164,7 +164,6 @@ namespace TechSupport.Controllers
                     if (User.Identity.GetUserName() == "admin@admin.com")
                     {
                         await UserManager.AddToRoleAsync(user.Id, "agent");
-                        //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                         return RedirectToAction("Index", "AspNetUsers");
                     }
                     else

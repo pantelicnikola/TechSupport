@@ -50,32 +50,20 @@ namespace TechSupport.Controllers
         // POST: AspNetUsers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize(Roles = "admin")]
-        //public async System.Threading.Tasks.Task<ActionResult> Create([Bind(Include = "Email,UserName,FirstName,LastName")] AspNetUser aspNetUser)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var user = new Models.ApplicationUser
-        //        {
-        //            UserName = aspNetUser.Email,
-        //            Email = aspNetUser.Email,
-        //            FirstName = aspNetUser.FirstName,
-        //            LastName = aspNetUser.LastName
-        //        };
-        //        //var result = await UserManager.CreateAsync(user, "password");
-        //        if (result.Succeeded)
-        //        {
-        //            //await UserManager.AddToRoleAsync(aspNetUser.Id, "user");
-        //        }
-        //        //db.AspNetUsers.Add(aspNetUser);
-        //        //db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
+        public async System.Threading.Tasks.Task<ActionResult> Create([Bind(Include = "Email,UserName,FirstName,LastName")] AspNetUser aspNetUser)
+        {
+            if (ModelState.IsValid)
+            {
+                db.AspNetUsers.Add(aspNetUser);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
-        //    return View(aspNetUser);
-        //}
+            return View(aspNetUser);
+        }
 
         // GET: AspNetUsers/Edit/5
         [Authorize(Roles = "admin")]

@@ -46,18 +46,12 @@
                             <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
                             <li>@Html.ActionLink("Users", "Index", "AspNetUsers")</li>
                             <li>@Html.ActionLink("Create Agent", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                            @*<li>@Html.ActionLink("Create Agent", "Create", "AspNetUsers")</li>*@
                         }
                         if (User.IsInRole("agent"))
                         {
 
                         }
-
-                    }
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
-                    
+                    }                    
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

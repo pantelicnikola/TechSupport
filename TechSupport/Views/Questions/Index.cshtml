@@ -23,12 +23,6 @@
 </style>
 
 <h2>Index</h2>
-@*@if (User.IsInRole("user"))
-{
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-}*@
 
 @using (Html.BeginForm("Index", "Questions", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
