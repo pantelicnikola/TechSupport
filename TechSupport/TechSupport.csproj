@@ -408,6 +408,7 @@
     <Content Include="Views\Channels\Details.cshtml" />
     <Content Include="Views\Channels\Edit.cshtml" />
     <Content Include="Views\Channels\Index.cshtml" />
+    <Content Include="Views\Questions\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

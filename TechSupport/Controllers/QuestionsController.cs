@@ -34,7 +34,7 @@ namespace TechSupport.Controllers
                 questionList.Add(modelItem);
             }
             QuestionsIndexViewModel model = new QuestionsIndexViewModel();
-            model.questions = questionList;
+            model.Questions = questionList;
             return View(model);
         }
 
@@ -56,7 +56,36 @@ namespace TechSupport.Controllers
                 questionList.Add(modelItem);
             }
             QuestionsIndexViewModel newModel = new QuestionsIndexViewModel();
-            newModel.questions = questionList;
+            newModel.Questions = questionList;
+            return View(newModel);
+        }
+
+        public ActionResult Search()
+        {
+            QuestionsSearchViewModel model = new QuestionsSearchViewModel();
+            model.Questions = new List<QuestionsIndexViewModelItem>();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Search(QuestionsSearchViewModel model)
+        {
+            var questions = db.Questions.Include(q => q.Channel1).Include(q => q.Category1).Where(question => question.Title.Contains(model.SearchString));
+            List<QuestionsIndexViewModelItem> questionList = new List<QuestionsIndexViewModelItem>();
+            
+            foreach (var question in questions)
+            {
+                var user = db.AspNetUsers.FirstOrDefault(usr => question.Author == usr.Id);
+                QuestionsIndexViewModelItem modelItem = new QuestionsIndexViewModelItem()
+                {
+                    Question = question,
+                    AuthorName = user.FirstName + " " + user.LastName,
+                    AnswerCount = question.Answers.Count()
+                };
+               questionList.Add(modelItem);
+            }
+            QuestionsSearchViewModel newModel = new QuestionsSearchViewModel();
+            newModel.Questions = questionList;
             return View(newModel);
         }
 

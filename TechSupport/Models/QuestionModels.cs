@@ -8,10 +8,14 @@ namespace TechSupport.Models
 
     public class QuestionsIndexViewModel
     {
-        public IEnumerable<QuestionsIndexViewModelItem> questions {get;set;}
+        public IEnumerable<QuestionsIndexViewModelItem> Questions {get;set;}
         public int Category { get; set; }
-        //public Category Category { get; set; }
+    }
 
+    public class QuestionsSearchViewModel
+    {
+        public IEnumerable<QuestionsIndexViewModelItem> Questions { get; set; }
+        public string SearchString { get; set; }
     }
 
     public class QuestionsIndexViewModelItem

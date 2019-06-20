@@ -31,13 +31,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("All Questions", "Index", "Questions")</li>
+                    <li>@Html.ActionLink("Questions", "Index", "Questions")</li>
+                    <li>@Html.ActionLink("Search", "Search", "Questions")</li>
                     @if (Request.IsAuthenticated)
                     {
                         if (User.IsInRole("user"))
                         {
-                            <li>@Html.ActionLink("Create Question", "Create", "Questions")</li>
-                            <li>@Html.ActionLink("Create Channel", "Create", "Channels")</li>
+                            <li>@Html.ActionLink("New Question", "Create", "Questions")</li>
+                            <li>@Html.ActionLink("New Channel", "Create", "Channels")</li>
                         }
                         if (User.IsInRole("admin"))
                         {

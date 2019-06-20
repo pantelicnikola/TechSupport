@@ -1,56 +1,30 @@
 ﻿@using Microsoft.AspNet.Identity
-@model TechSupport.Models.QuestionsIndexViewModel
+@model TechSupport.Models.QuestionsSearchViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Search";
 }
 
-<style type="text/css">
-    .true {
-        background-color: crimson;
-        color : white;
-    }
-    .false {
-        background-color: white;
-    }
-    .true td a {
-        color : white;
-        text-decoration : none;
-    }
-    .true td a:hover {
-        color : cadetblue;
-    }
-</style>
+<h2>Search</h2>
 
-<h2>Index</h2>
-@*@if (User.IsInRole("user"))
-{
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-}*@
-
-@using (Html.BeginForm("Index", "Questions", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Search", "Questions", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="form-horizontal">
-        <div class="form-inline">
-            <div class="form-group">
-                @Html.LabelFor(m => m.Category, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.DropDownList("Category", null, htmlAttributes: new { @class = "col-md-offset-4 form-control" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.SearchString, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.SearchString, new { @class = "form-control" })
             </div>
+        </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-8 col-md-10">
-                    <input type="submit" value="Search" class="btn btn-primary btn-sm" />
-                </div>
+        <div class="form-group">
+            <div class="col-md-offset-8 col-md-10">
+                <input type="submit" value="Search" class="btn btn-primary btn-sm" />
             </div>
         </div>
     </div>
 }
 
-<hr />
 
 <table class="table">
     <tr>
@@ -81,7 +55,6 @@
                 @Html.DisplayFor(modelItem => item.AnswerCount)
             </td>
             <td class="action">
-                @*@Html.ActionLink("Details  ", "Details", new { id = item.Question.Id })*@
                 @if (User.Identity.GetUserId() == item.Question.Author)
                 {
                     if (!item.Question.Locked)
