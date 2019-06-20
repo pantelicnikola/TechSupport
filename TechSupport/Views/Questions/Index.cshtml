@@ -55,13 +55,13 @@
 <table class="table">
     <tr>
         <th>
-            Title
+            @Html.DisplayNameFor(model => model.questions.First().Question.Title)
         </th>
         <th>
-            Author 
+            @Html.DisplayNameFor(model => model.questions.First().AuthorName)
         </th>
         <th>
-            Answers
+            @Html.DisplayNameFor(model => model.questions.First().AnswerCount)
         </th>
         <th>
             Action
@@ -72,7 +72,7 @@
     {
         <tr class="@item.Question.Locked.ToString().ToLower()">
             <td>
-                @Html.DisplayFor(modelItem => item.Question.Title)
+                @Html.ActionLink(item.Question.Title, "Details", new { id = item.Question.Id })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AuthorName)
@@ -81,7 +81,7 @@
                 @Html.DisplayFor(modelItem => item.AnswerCount)
             </td>
             <td class="action">
-                @Html.ActionLink("Details  ", "Details", new { id = item.Question.Id })
+                @*@Html.ActionLink("Details  ", "Details", new { id = item.Question.Id })*@
                 @if (User.Identity.GetUserId() == item.Question.Author)
                 {
                     if (!item.Question.Locked)
