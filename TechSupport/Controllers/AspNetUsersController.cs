@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,6 +16,7 @@ namespace TechSupport.Controllers
         private TechSupport20190613121821_dbEntities db = new TechSupport20190613121821_dbEntities();
 
         // GET: AspNetUsers
+        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             List<AspNetUser> users = db.AspNetUsers.ToList();
@@ -39,6 +41,7 @@ namespace TechSupport.Controllers
         //}
 
         // GET: AspNetUsers/Create
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
@@ -47,20 +50,32 @@ namespace TechSupport.Controllers
         // POST: AspNetUsers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
-        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,Name")] AspNetUser aspNetUser)
-        {
-            if (ModelState.IsValid)
-            {
-                db.AspNetUsers.Add(aspNetUser);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles = "admin")]
+        //public async System.Threading.Tasks.Task<ActionResult> Create([Bind(Include = "Email,UserName,FirstName,LastName")] AspNetUser aspNetUser)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = new Models.ApplicationUser
+        //        {
+        //            UserName = aspNetUser.Email,
+        //            Email = aspNetUser.Email,
+        //            FirstName = aspNetUser.FirstName,
+        //            LastName = aspNetUser.LastName
+        //        };
+        //        //var result = await UserManager.CreateAsync(user, "password");
+        //        if (result.Succeeded)
+        //        {
+        //            //await UserManager.AddToRoleAsync(aspNetUser.Id, "user");
+        //        }
+        //        //db.AspNetUsers.Add(aspNetUser);
+        //        //db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            return View(aspNetUser);
-        }
+        //    return View(aspNetUser);
+        //}
 
         // GET: AspNetUsers/Edit/5
         [Authorize(Roles = "admin")]
