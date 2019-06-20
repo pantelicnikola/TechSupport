@@ -60,6 +60,25 @@ namespace TechSupport.Controllers
             return View(newModel);
         }
 
+        public ActionResult MyQuestions()
+        {
+            var userId = User.Identity.GetUserId();
+            var questions = db.Questions.Include(q => q.Channel1).Include(q => q.Category1).Where(question => question.Author == userId);
+            var user = db.AspNetUsers.FirstOrDefault(usr => userId == usr.Id);
+            List<QuestionsIndexViewModelItem> questionList = new List<QuestionsIndexViewModelItem>();
+            foreach (var question in questions)
+            {
+                QuestionsIndexViewModelItem modelItem = new QuestionsIndexViewModelItem()
+                {
+                    Question = question,
+                    AuthorName = user.FirstName + " " + user.LastName,
+                    AnswerCount = question.Answers.Count()
+                };
+                questionList.Add(modelItem);
+            }
+            return View(questionList);
+        }
+
         public ActionResult Search()
         {
             QuestionsSearchViewModel model = new QuestionsSearchViewModel();
