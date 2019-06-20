@@ -3,6 +3,26 @@
 @{
     ViewBag.Title = "MyQuestions";
 }
+
+<style type="text/css">
+    .true {
+        background-color: crimson;
+        color: white;
+    }
+
+    .false {
+        background-color: white;
+    }
+
+    .true td a {
+        color: white;
+        text-decoration: none;
+    }
+
+        .true td a:hover {
+            color: cadetblue;
+        }
+</style>
  
 <h2>MyQuestions</h2>
 
@@ -36,33 +56,12 @@
             </td>
             <td class="action">
                 @Html.ActionLink("Details  ", "Details", new { id = item.Question.Id })
-                @if (User.Identity.GetUserId() == item.Question.Author)
+                @if (!item.Question.Locked)
                 {
-                    if (!item.Question.Locked)
-                    {
-                        @Html.ActionLink("Close  ", "Close", new { id = item.Question.Id });
-                    }
-                    @Html.ActionLink("Delete  ", "Delete", new { id = item.Question.Id })
-                }
-                @if (User.IsInRole("admin"))
-                {
-                    if (item.Question.Locked)
-                    {
-                        @Html.ActionLink("Open  ", "Open", new { id = item.Question.Id });
-                    }
-                    @Html.ActionLink("Delete  ", "Delete", new { id = item.Question.Id })
-                }
-                @if (User.IsInRole("agent"))
-                {
-                    if (item.Question.Locked)
-                    {
-                        @Html.ActionLink("Open  ", "Open", new { id = item.Question.Id });
-                    }
-                }
-                @if (User.Identity.IsAuthenticated)
-                {
-                    @Html.ActionLink("Answer  ", "Create", "Answers", new { Id = item.Question.Id }, null);
-                }
+                    @Html.ActionLink("Close  ", "Close", new { id = item.Question.Id });
+                }    
+                @Html.ActionLink("Answer  ", "Create", "Answers", new { Id = item.Question.Id }, null)
+                
             </td>
         </tr>
     }

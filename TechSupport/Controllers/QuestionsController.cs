@@ -60,6 +60,7 @@ namespace TechSupport.Controllers
             return View(newModel);
         }
 
+        [Authorize(Roles = "user")]
         public ActionResult MyQuestions()
         {
             var userId = User.Identity.GetUserId();
