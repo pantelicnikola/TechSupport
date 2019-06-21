@@ -18,6 +18,7 @@ namespace TechSupport
         public Answer()
         {
             this.Answers1 = new HashSet<Answer>();
+            this.Ratings = new HashSet<Rating>();
         }
     
         public int Id { get; set; }
@@ -34,5 +35,7 @@ namespace TechSupport
         public virtual Answer Answer1 { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Question Question1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Rating> Ratings { get; set; }
     }
 }

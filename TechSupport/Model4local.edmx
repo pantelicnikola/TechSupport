@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TechSupport20190613121821_dbModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TechSupport20190613121821_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -28,7 +28,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Question" Type="int" Nullable="false" />
+          <Property Name="Question" Type="int" />
           <Property Name="ReplyOn" Type="int" />
           <Property Name="Author" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="TimeCreated" Type="datetime" Nullable="false" />
@@ -124,6 +124,15 @@
           <Property Name="Channel" Type="int" Nullable="false" />
           <Property Name="Locked" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Ratings">
+          <Key>
+            <PropertyRef Name="AspNetUser" />
+            <PropertyRef Name="Answer" />
+          </Key>
+          <Property Name="AspNetUser" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Answer" Type="int" Nullable="false" />
+          <Property Name="Likes" Type="bit" Nullable="false" />
+        </EntityType>
         <Association Name="FK_AgentChannel_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="AgentChannel" Type="Self.AgentChannel" Multiplicity="*" />
@@ -173,7 +182,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Answer_Question">
-          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Questions" Multiplicity="0..1" />
           <End Role="Answers" Type="Self.Answers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Questions">
@@ -276,7 +285,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="TechSupport20190613121821_dbModel1StoreContainer">
+        <Association Name="FK_Ratings_Answers">
+          <End Role="Answers" Type="Self.Answers" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="Answer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ratings_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="AspNetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TechSupport20190613121821_dbModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AgentChannel" EntityType="Self.AgentChannel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
@@ -288,6 +321,7 @@
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Channels" EntityType="Self.Channels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AgentChannel_AspNetUsers" Association="Self.FK_AgentChannel_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AgentChannel" EntitySet="AgentChannel" />
@@ -336,11 +370,20 @@
             <End Role="Channels" EntitySet="Channels" />
             <End Role="Questions" EntitySet="Questions" />
           </AssociationSet>
+          <AssociationSet Name="FK_Ratings_Answers" Association="Self.FK_Ratings_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ratings_AspNetUsers" Association="Self.FK_Ratings_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TechSupport20190613121821_dbModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="TechSupport20190613121821_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -356,7 +399,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Question" Type="Int32" Nullable="false" />
+          <Property Name="Question" Type="Int32" />
           <Property Name="ReplyOn" Type="Int32" />
           <Property Name="Author" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TimeCreated" Type="DateTime" Nullable="false" Precision="3" />
@@ -367,6 +410,7 @@
           <NavigationProperty Name="Answer1" Relationship="Self.FK_Answer_Answer1" FromRole="Answers1" ToRole="Answers" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Answer_AspNetUsers" FromRole="Answers" ToRole="AspNetUsers" />
           <NavigationProperty Name="Question1" Relationship="Self.FK_Answer_Question" FromRole="Answers" ToRole="Questions" />
+          <NavigationProperty Name="Ratings" Relationship="Self.FK_Ratings_Answers" FromRole="Answers" ToRole="Ratings" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -420,6 +464,7 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Channels" Relationship="Self.FK_Channel_AspNetUsers" FromRole="AspNetUsers" ToRole="Channels" />
+          <NavigationProperty Name="Ratings" Relationship="Self.FK_Ratings_AspNetUsers" FromRole="AspNetUsers" ToRole="Ratings" />
           <NavigationProperty Name="Channels1" Relationship="Self.AgentChannel" FromRole="AspNetUsers" ToRole="Channels" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
@@ -435,7 +480,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TimeCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Creator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
@@ -464,6 +509,17 @@
           <NavigationProperty Name="Category1" Relationship="Self.FK_Questions_Categories" FromRole="Questions" ToRole="Categories" />
           <NavigationProperty Name="Channel1" Relationship="Self.FK_Questions_Channel" FromRole="Questions" ToRole="Channels" />
         </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="AspNetUser" />
+            <PropertyRef Name="Answer" />
+          </Key>
+          <Property Name="AspNetUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Answer" Type="Int32" Nullable="false" />
+          <Property Name="Likes" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Answer1" Relationship="Self.FK_Ratings_Answers" FromRole="Ratings" ToRole="Answers" />
+          <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_Ratings_AspNetUsers" FromRole="Ratings" ToRole="AspNetUsers" />
+        </EntityType>
         <Association Name="FK_Answer_Answer1">
           <End Role="Answers" Type="Self.Answer" Multiplicity="0..1" />
           <End Role="Answers1" Type="Self.Answer" Multiplicity="*" />
@@ -489,7 +545,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Answer_Question">
-          <End Role="Questions" Type="Self.Question" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Question" Multiplicity="0..1" />
           <End Role="Answers" Type="Self.Answer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Questions">
@@ -497,6 +553,18 @@
             </Principal>
             <Dependent Role="Answers">
               <PropertyRef Name="Question" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ratings_Answers">
+          <End Role="Answers" Type="Self.Answer" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="Answer" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -540,6 +608,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Ratings_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="AspNetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Questions_Categories">
           <End Role="Categories" Type="Self.Category" Multiplicity="1" />
           <End Role="Questions" Type="Self.Question" Multiplicity="*" />
@@ -572,7 +652,7 @@
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="TechSupport20190613121821_dbEntities5" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TechSupport20190613121821_dbEntities6" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="Answers" EntityType="Self.Answer" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
@@ -582,6 +662,7 @@
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Channels" EntityType="Self.Channel" />
           <EntitySet Name="Questions" EntityType="Self.Question" />
+          <EntitySet Name="Ratings" EntityType="Self.Rating" />
           <AssociationSet Name="FK_Answer_Answer1" Association="Self.FK_Answer_Answer1">
             <End Role="Answers" EntitySet="Answers" />
             <End Role="Answers1" EntitySet="Answers" />
@@ -594,6 +675,10 @@
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Answers" EntitySet="Answers" />
           </AssociationSet>
+          <AssociationSet Name="FK_Ratings_Answers" Association="Self.FK_Ratings_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -605,6 +690,10 @@
           <AssociationSet Name="FK_Channel_AspNetUsers" Association="Self.FK_Channel_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Channels" EntitySet="Channels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ratings_AspNetUsers" Association="Self.FK_Ratings_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Ratings" EntitySet="Ratings" />
           </AssociationSet>
           <AssociationSet Name="FK_Questions_Categories" Association="Self.FK_Questions_Categories">
             <End Role="Categories" EntitySet="Categories" />
@@ -628,9 +717,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TechSupport20190613121821_dbModel1StoreContainer" CdmEntityContainer="TechSupport20190613121821_dbEntities5">
+        <EntityContainerMapping StorageEntityContainer="TechSupport20190613121821_dbModelStoreContainer" CdmEntityContainer="TechSupport20190613121821_dbEntities6">
           <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.C__MigrationHistory">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
                 <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
@@ -640,7 +729,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Answers">
-            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.Answer">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel.Answer">
               <MappingFragment StoreEntitySet="Answers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Question" ColumnName="Question" />
@@ -654,7 +743,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.AspNetRole">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -662,7 +751,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.AspNetUserClaim">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -672,7 +761,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.AspNetUserLogin">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -681,7 +770,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.AspNetUser">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -702,7 +791,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.Category">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel.Category">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -710,7 +799,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Channels">
-            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.Channel">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel.Channel">
               <MappingFragment StoreEntitySet="Channels">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -722,7 +811,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Questions">
-            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.Question">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel.Question">
               <MappingFragment StoreEntitySet="Questions">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -738,7 +827,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AgentChannel" TypeName="TechSupport20190613121821_dbModel1.AgentChannel" StoreEntitySet="AgentChannel">
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel.Rating">
+              <MappingFragment StoreEntitySet="Ratings">
+                <ScalarProperty Name="AspNetUser" ColumnName="AspNetUser" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="Likes" ColumnName="Likes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AgentChannel" TypeName="TechSupport20190613121821_dbModel.AgentChannel" StoreEntitySet="AgentChannel">
             <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="Id" ColumnName="Agent" />
             </EndProperty>
@@ -746,7 +844,7 @@
               <ScalarProperty Name="Id" ColumnName="Channel" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="TechSupport20190613121821_dbModel1.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="TechSupport20190613121821_dbModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>

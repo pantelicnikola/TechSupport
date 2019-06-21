@@ -198,7 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Answer.cs">
-      <DependentUpon>Model3local.tt</DependentUpon>
+      <DependentUpon>Model4local.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -208,22 +208,22 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Startup.Role.cs" />
     <Compile Include="AspNetRole.cs">
-      <DependentUpon>Model3local.tt</DependentUpon>
+      <DependentUpon>Model4local.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUser.cs">
-      <DependentUpon>Model3local.tt</DependentUpon>
+      <DependentUpon>Model4local.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserClaim.cs">
-      <DependentUpon>Model3local.tt</DependentUpon>
+      <DependentUpon>Model4local.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserLogin.cs">
-      <DependentUpon>Model3local.tt</DependentUpon>
+      <DependentUpon>Model4local.tt</DependentUpon>
     </Compile>
     <Compile Include="Category.cs">
-      <DependentUpon>Model3local.tt</DependentUpon>
+      <DependentUpon>Model4local.tt</DependentUpon>
     </Compile>
     <Compile Include="Channel.cs">
-      <DependentUpon>Model3local.tt</DependentUpon>
+      <DependentUpon>Model4local.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswersController.cs" />
@@ -234,26 +234,26 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="C__MigrationHistory.cs">
-      <DependentUpon>Model3local.tt</DependentUpon>
+      <DependentUpon>Model4local.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model3local.Context.cs">
+    <Compile Include="Model4local.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model3local.Context.tt</DependentUpon>
+      <DependentUpon>Model4local.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model3local.cs">
+    <Compile Include="Model4local.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model3local.tt</DependentUpon>
+      <DependentUpon>Model4local.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model3local.Designer.cs">
+    <Compile Include="Model4local.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model3local.edmx</DependentUpon>
+      <DependentUpon>Model4local.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model8.Context.cs">
       <AutoGen>True</AutoGen>
@@ -277,7 +277,10 @@
     <Compile Include="Models\QuestionModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question.cs">
-      <DependentUpon>Model3local.tt</DependentUpon>
+      <DependentUpon>Model4local.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Rating.cs">
+      <DependentUpon>Model4local.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -288,15 +291,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Model3local.Context.tt">
+    <Content Include="Model4local.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model3local.edmx</DependentUpon>
-      <LastGenOutput>Model3local.Context.cs</LastGenOutput>
+      <DependentUpon>Model4local.edmx</DependentUpon>
+      <LastGenOutput>Model4local.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model3local.tt">
+    <Content Include="Model4local.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model3local.edmx</DependentUpon>
-      <LastGenOutput>Model3local.cs</LastGenOutput>
+      <DependentUpon>Model4local.edmx</DependentUpon>
+      <LastGenOutput>Model4local.cs</LastGenOutput>
     </Content>
     <Content Include="Model8.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -322,12 +325,12 @@
     <Content Include="Model8.edmx.diagram">
       <DependentUpon>Model8.edmx</DependentUpon>
     </Content>
-    <EntityDeploy Include="Model3local.edmx">
+    <EntityDeploy Include="Model4local.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model3local.Designer.cs</LastGenOutput>
+      <LastGenOutput>Model4local.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Model3local.edmx.diagram">
-      <DependentUpon>Model3local.edmx</DependentUpon>
+    <Content Include="Model4local.edmx.diagram">
+      <DependentUpon>Model4local.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\TechSupport20190613121821 - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\TechSupport20190613121821 - FTP %283%29.pubxml" />
