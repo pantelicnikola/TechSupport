@@ -1,4 +1,5 @@
-﻿@model TechSupport.Question
+﻿@using Microsoft.AspNet.Identity
+@model TechSupport.Question
 
 @{
     ViewBag.Title = "Details";
@@ -96,11 +97,12 @@
                 @Html.DisplayFor(modelItem => item.TimeCreated)
             </td>
             <td>
-                Likes
+                @Html.ActionLink("Like ", "Create", "Ratings", new { UserId = User.Identity.GetUserId(), AnswerId = item.Id, Likes = true }, null)
                 @Html.DisplayFor(modelItem => item.Upvotes)
+                @*@Html.ActionLink()*@
             </td>
             <td>
-                Dislikes
+                @Html.ActionLink("Dislike ", "Create", "Ratings", new { UserId = User.Identity.GetUserId(), AnswerId = item.Id, Likes = false }, null)
                 @Html.DisplayFor(modelItem => item.Downvotes)
             </td>
             <td>
