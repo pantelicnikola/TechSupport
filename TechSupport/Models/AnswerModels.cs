@@ -12,6 +12,4 @@ namespace TechSupport.Models
         public string QuestionTitle { get; set; }
         public string AnswerText { get; set; }
     }
-
-
 }

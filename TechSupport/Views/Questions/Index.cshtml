@@ -104,7 +104,7 @@
                 {
                     if (!item.Question.Locked)
                     {
-                        @Html.ActionLink("Answer  ", "Create", "Answers", new { Id = item.Question.Id }, null);
+                        @Html.ActionLink("Answer  ", "Create", "Answers", new { QuestionId = item.Question.Id }, null);
                     }
                 }
             </td>

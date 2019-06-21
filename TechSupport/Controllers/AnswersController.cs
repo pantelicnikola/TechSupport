@@ -38,12 +38,13 @@ namespace TechSupport.Controllers
         }
 
         // GET: Answers/Create
-        public ActionResult Create(int Id)
+        public ActionResult Create(int? QuestionId, int? ReplyOn)
         {
             ViewBag.ReplyOn = new SelectList(db.Answers, "Id", "Author");
             ViewBag.Author = new SelectList(db.AspNetUsers, "Id", "Email");
             ViewBag.Question = new SelectList(db.Questions, "Id", "Title");
-            TempData["QuestionToAnswer"] = db.Questions.FirstOrDefault(question => question.Id == Id);
+            TempData["QuestionToAnswer"] = QuestionId;
+            TempData["AnswerToReply"] = ReplyOn;
             return View();
         }
 
@@ -54,17 +55,19 @@ namespace TechSupport.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Text")] Answer answer)
         {
-            Question question = (Question)TempData["QuestionToAnswer"];
+            int? QuestionId = (int?)TempData["QuestionToAnswer"];
+            int? ReplyOn = (int?)TempData["AnswerToReply"];
             if (ModelState.IsValid)
             {
                 answer.TimeCreated = DateTime.Now;
                 answer.Upvotes = 0;
                 answer.Downvotes = 0;
-                answer.Question = question.Id;
+                answer.Question = QuestionId;
                 answer.Author = User.Identity.GetUserId();
+                answer.ReplyOn = ReplyOn;
                 db.Answers.Add(answer);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Questions");
             }
 
             ViewBag.ReplyOn = new SelectList(db.Answers, "Id", "Author", answer.ReplyOn);

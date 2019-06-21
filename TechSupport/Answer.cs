@@ -21,7 +21,7 @@ namespace TechSupport
         }
     
         public int Id { get; set; }
-        public int Question { get; set; }
+        public Nullable<int> Question { get; set; }
         public Nullable<int> ReplyOn { get; set; }
         public string Author { get; set; }
         public System.DateTime TimeCreated { get; set; }

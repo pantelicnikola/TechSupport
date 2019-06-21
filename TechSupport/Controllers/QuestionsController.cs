@@ -116,7 +116,16 @@ namespace TechSupport.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Question question = db.Questions.Find(id);
+            Question question = 
+                db.Questions
+                .Include(q => q.Answers.Select(a => a.AspNetUser))
+                .Include(q => q.Answers.Select(a => a.Answers1))
+                .SingleOrDefault(q => q.Id == id);
+            //foreach (var answer in question.Answers)
+            //{
+            //    answer.AspNetUser = db.AspNetUsers.Find(answer.Author);
+            //    answer.Answers1 = db.Answers.Where(a => a.Question == question.Id && )
+            //}
             if (question == null)
             {
                 return HttpNotFound();
