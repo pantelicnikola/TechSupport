@@ -98,6 +98,30 @@ namespace TechSupport.Controllers
             return View(aspNetUser);
         }
 
+
+        [Authorize(Roles = "admin")]
+        public ActionResult Disable(string id)
+        {
+            var aspNetUser = db.AspNetUsers.Find(id);
+            aspNetUser.LockoutEnabled = true;
+            aspNetUser.LockoutEndDateUtc = DateTime.Now;    
+            db.Entry(aspNetUser).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult Enable(string id)
+        {
+            var aspNetUser = db.AspNetUsers.Find(id);
+            aspNetUser.LockoutEnabled = false;
+            db.Entry(aspNetUser).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+
         // GET: AspNetUsers/Delete/5
         //public ActionResult Delete(string id)
         //{
