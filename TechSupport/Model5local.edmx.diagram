@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="48ff6291e68a42a793a001b80154c9ce" Name="Diagram1">
+        <EntityTypeShape EntityType="TechSupport20190613121821_dbModel1.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupport20190613121821_dbModel1.Answer" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupport20190613121821_dbModel1.AspNetRole" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupport20190613121821_dbModel1.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupport20190613121821_dbModel1.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupport20190613121821_dbModel1.AspNetUser" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupport20190613121821_dbModel1.Category" Width="1.5" PointX="5.25" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupport20190613121821_dbModel1.Channel" Width="1.5" PointX="5.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupport20190613121821_dbModel1.Question" Width="1.5" PointX="7.5" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupport20190613121821_dbModel1.Rating" Width="1.5" PointX="7.5" PointY="6" IsExpanded="true" />
+        <AssociationConnector Association="TechSupport20190613121821_dbModel1.FK_Answer_Answer1" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupport20190613121821_dbModel1.FK_Answer_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupport20190613121821_dbModel1.FK_Answer_Question" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupport20190613121821_dbModel1.FK_Ratings_Answers" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupport20190613121821_dbModel1.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupport20190613121821_dbModel1.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupport20190613121821_dbModel1.FK_Channel_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupport20190613121821_dbModel1.FK_Ratings_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupport20190613121821_dbModel1.FK_Questions_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupport20190613121821_dbModel1.FK_Questions_Channel" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupport20190613121821_dbModel1.AgentChannel" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupport20190613121821_dbModel1.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -41,6 +41,7 @@ namespace TechSupport
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Tokens { get; set; }
+        public bool Disabled { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Answer> Answers { get; set; }

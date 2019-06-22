@@ -148,6 +148,14 @@ namespace TechSupport.Controllers
             return RedirectToAction("Index");
         }
 
+        //public ActionResult Delete(int AnswerId, int QuestionId)
+        //{
+        //    Rating rating = db.Ratings.Find(AnswerId);
+        //    db.Ratings.Remove(rating);
+        //    db.SaveChanges();
+        //    return Redirect("/Questions/Details/" + QuestionId);
+        //}
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

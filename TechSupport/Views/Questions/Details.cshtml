@@ -112,14 +112,12 @@
             </td>
             <td>
                 @Html.ActionLink("Answer ", "Create", "Answers", new { ReplyOn = item.Id }, null)
-                @*@using (Html.BeginForm("Reply", "Answers", new { auctionId = auction.Id }, FormMethod.Post, null))
+                @if (User.IsInRole("admin"))
                 {
-                @Html.TextBoxFor(m => m.numTokens, new { @class = "form-control", autocomplete = "off", @Value = 1 })
-                <input type="submit" value="Bid" class="bid btn btn-primary btn-sm" />
-
-                }*@
-
+                    @Html.ActionLink("Delete ", "Delete", "Answers", new { AnswerId = item.Id, QuestionId = Model.Id }, null)
+                }
             </td>
+
         </tr>
     }
 </table>

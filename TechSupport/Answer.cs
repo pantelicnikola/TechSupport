@@ -27,8 +27,6 @@ namespace TechSupport
         public string Author { get; set; }
         public System.DateTime TimeCreated { get; set; }
         public string Text { get; set; }
-        public int Upvotes { get; set; }
-        public int Downvotes { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Answer> Answers1 { get; set; }

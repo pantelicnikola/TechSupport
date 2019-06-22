@@ -60,8 +60,6 @@ namespace TechSupport.Controllers
             if (ModelState.IsValid)
             {
                 answer.TimeCreated = DateTime.Now;
-                answer.Upvotes = 0;
-                answer.Downvotes = 0;
                 answer.Question = QuestionId;
                 answer.Author = User.Identity.GetUserId();
                 answer.ReplyOn = ReplyOn;
@@ -99,7 +97,7 @@ namespace TechSupport.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Question,ReplyOn,Author,TimeCreated,Text,Upvotes,Downvotes")] Answer answer)
+        public ActionResult Edit([Bind(Include = "Id,Question,ReplyOn,Author,TimeCreated,Text")] Answer answer)
         {
             if (ModelState.IsValid)
             {
@@ -114,29 +112,49 @@ namespace TechSupport.Controllers
         }
 
         // GET: Answers/Delete/5
-        public ActionResult Delete(int? id)
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Answer answer = db.Answers.Find(id);
+        //    if (answer == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(answer);
+        //}
+
+        //// POST: Answers/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Answer answer = db.Answers.Include(a => a.Answers1).SingleOrDefault(a => a.Id.Equals(id));
+        //    DeleteAnswer(answer);
+        //    return RedirectToAction("Index");
+        //}
+
+        public ActionResult Delete(int AnswerId, int QuestionId)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Answer answer = db.Answers.Find(id);
-            if (answer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(answer);
+            Answer answer = db.Answers.Include(a => a.Answers1).SingleOrDefault(a => a.Id.Equals(AnswerId));
+            DeleteAnswer(answer);
+            return Redirect("/Questions/Details/" + QuestionId);
         }
 
-        // POST: Answers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public void DeleteAnswer(Answer answer)
         {
-            Answer answer = db.Answers.Find(id);
+            if (answer.Answers1 != null)
+            {
+                foreach (var a in answer.Answers1.ToList())
+                {
+                    Answer ans = db.Answers.Include(an => an.Answers1).SingleOrDefault(an => an.Id.Equals(a.Id));
+                    DeleteAnswer(ans);
+                }
+            } 
             db.Answers.Remove(answer);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            db.SaveChanges();            
         }
 
         protected override void Dispose(bool disposing)
