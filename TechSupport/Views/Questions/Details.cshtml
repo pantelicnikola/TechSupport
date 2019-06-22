@@ -97,16 +97,21 @@
                 @Html.DisplayFor(modelItem => item.TimeCreated)
             </td>
             <td>
-                @Html.ActionLink("Like ", "Create", "Ratings", new { UserId = User.Identity.GetUserId(), AnswerId = item.Id, Likes = true }, null)
-                @Html.DisplayFor(modelItem => item.Upvotes)
-                @*@Html.ActionLink()*@
+                @{ 
+                    int likes = item.Ratings.Where(r => r.Likes.Equals(true)).Count();
+                }
+                @Html.ActionLink("Like ", "Create", "Ratings", new { UserId = User.Identity.GetUserId(), AnswerId = item.Id, Likes = true, QuestionId = Model.Id }, null)
+                @Html.DisplayFor(modelItem => likes)
             </td>
             <td>
-                @Html.ActionLink("Dislike ", "Create", "Ratings", new { UserId = User.Identity.GetUserId(), AnswerId = item.Id, Likes = false }, null)
-                @Html.DisplayFor(modelItem => item.Downvotes)
+                @{
+                    int dislikes = item.Ratings.Where(r => r.Likes.Equals(false)).Count();
+                }
+                @Html.ActionLink("Dislike ", "Create", "Ratings", new { UserId = User.Identity.GetUserId(), AnswerId = item.Id, Likes = false, QuestionId = Model.Id }, null)
+                @Html.DisplayFor(modelItem => dislikes)
             </td>
             <td>
-                @Html.ActionLink("Answer  ", "Create", "Answers", new { ReplyOn = item.Id }, null)
+                @Html.ActionLink("Answer ", "Create", "Answers", new { ReplyOn = item.Id }, null)
                 @*@using (Html.BeginForm("Reply", "Answers", new { auctionId = auction.Id }, FormMethod.Post, null))
                 {
                 @Html.TextBoxFor(m => m.numTokens, new { @class = "form-control", autocomplete = "off", @Value = 1 })

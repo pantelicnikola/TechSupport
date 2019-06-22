@@ -60,6 +60,19 @@ namespace TechSupport.Controllers
             return View(newModel);
         }
 
+        public ActionResult Rate(string UserId, int AnswerId, bool Likes)
+        {
+            Rating rating = new Rating
+            {
+                AspNetUser = UserId,
+                Answer = AnswerId,
+                Likes = Likes
+            };
+            db.Ratings.Add(rating);
+            db.SaveChanges();
+            return View();
+        }
+
         [Authorize(Roles = "user")]
         public ActionResult MyQuestions()
         {

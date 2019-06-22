@@ -65,18 +65,26 @@ namespace TechSupport.Controllers
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(string UserId, int AnswerId, bool Likes)
+        public ActionResult Create(string UserId, int AnswerId, bool Likes, int QuestionId)
         {
-            Rating rating = new Rating
+            Rating Rating = db.Ratings.Find(UserId, AnswerId);
+            if (Rating != null)
             {
-                AspNetUser = UserId,
-                Answer = AnswerId,
-                Likes = Likes
-            };
-            db.Ratings.Add(rating);
+                Rating.Likes = Likes;
+                db.Entry(Rating).State = EntityState.Modified;
+            }
+            else
+            {
+                Rating = new Rating
+                {
+                    AspNetUser = UserId,
+                    Answer = AnswerId,
+                    Likes = Likes
+                };
+                db.Ratings.Add(Rating);
+            }
             db.SaveChanges();
-            
-            return null;
+            return Redirect("/Questions/Details/" + QuestionId);
         }
 
         // GET: Ratings/Edit/5
