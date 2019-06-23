@@ -67,7 +67,7 @@
     {
         <tr class="@item.Question.Locked.ToString().ToLower()">
             <td>
-                @Html.ActionLink(item.Question.Title, "Details", new { id = item.Question.Id })
+                @Html.ActionLink(item.Question.Title, "Details", new { id = item.Question.Id, sort = "time" })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AuthorName)

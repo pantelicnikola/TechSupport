@@ -123,27 +123,59 @@ namespace TechSupport.Controllers
         }
 
         // GET: Questions/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string sort)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            string sortOrder = (string)TempData["sortOrder"];
+            if (sortOrder != null && sortOrder.Contains(sort) && sortOrder.Contains("desc"))
+            {
+                sortOrder = sort + "_" + "asc";
+            } else
+            {
+                sortOrder = sort + "_" + "desc";
+            }
+            TempData["sortOrder"] = sortOrder;
+
             Question question = 
                 db.Questions
                 .Include(q => q.Answers.Select(a => a.AspNetUser))
-                .Include(q => q.Answers.Select(a => a.Answers1))
+                .Include(q => q.Answers.Select(a => a.Answers1.Select(asd => asd.Answers1.Select(sdf => sdf.Answers1))))
                 .SingleOrDefault(q => q.Id == id);
-            //foreach (var answer in question.Answers)
-            //{
-            //    answer.AspNetUser = db.AspNetUsers.Find(answer.Author);
-            //    answer.Answers1 = db.Answers.Where(a => a.Question == question.Id && )
-            //}
             if (question == null)
             {
                 return HttpNotFound();
             }
+            question = SortAnswers(question, sortOrder);
             return View(question);
+        }
+
+        public Question SortAnswers(Question question, string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "time_asc":
+                    question.Answers = question.Answers.OrderBy(a => a.TimeCreated).ToList();
+                    break;
+                case "time_desc":
+                    question.Answers = question.Answers.OrderByDescending(a => a.TimeCreated).ToList();
+                    break;
+                case "likes_asc":
+                    question.Answers = question.Answers.OrderBy(a => a.Ratings.Where(r => r.Likes.Equals(true)).Count()).ToList();
+                    break;
+                case "likes_desc":
+                    question.Answers = question.Answers.OrderByDescending(a => a.Ratings.Where(r => r.Likes.Equals(true)).Count()).ToList();
+                    break;
+                case "dislikes_asc":
+                    question.Answers = question.Answers.OrderBy(a => a.Ratings.Where(r => r.Likes.Equals(false)).Count()).ToList();
+                    break;
+                case "dislikes_desc":
+                    question.Answers = question.Answers.OrderByDescending(a => a.Ratings.Where(r => r.Likes.Equals(false)).Count()).ToList();
+                    break;
+            }
+            return question;
         }
 
         // GET: Questions/Create

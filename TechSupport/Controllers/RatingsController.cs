@@ -65,6 +65,7 @@ namespace TechSupport.Controllers
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create(string UserId, int AnswerId, bool Likes, int QuestionId)
         {
             Rating Rating = db.Ratings.Find(UserId, AnswerId);
