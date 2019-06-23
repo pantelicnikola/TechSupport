@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using TechSupport;
 using TechSupport.Models;
+using PagedList;
 
 namespace TechSupport.Controllers
 {
@@ -17,7 +18,7 @@ namespace TechSupport.Controllers
         private TechSupport20190613121821_dbEntities db = new TechSupport20190613121821_dbEntities();
 
         // GET: Questions
-        public ActionResult Index()
+        public ActionResult Index(int page)
         {
             ViewBag.Category = new SelectList(db.Categories, "Id", "Name");
             var questions = db.Questions.Include(q => q.Channel1).Include(q => q.Category1);
@@ -34,7 +35,7 @@ namespace TechSupport.Controllers
                 questionList.Add(modelItem);
             }
             QuestionsIndexViewModel model = new QuestionsIndexViewModel();
-            model.Questions = questionList;
+            model.Questions = questionList.ToPagedList(page,10);
             return View(model);
         }
 
@@ -56,7 +57,7 @@ namespace TechSupport.Controllers
                 questionList.Add(modelItem);
             }
             QuestionsIndexViewModel newModel = new QuestionsIndexViewModel();
-            newModel.Questions = questionList;
+            newModel.Questions = questionList.ToPagedList(1, 10);
             return View(newModel);
         }
 

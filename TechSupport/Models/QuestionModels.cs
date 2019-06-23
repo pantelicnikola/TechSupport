@@ -8,7 +8,7 @@ namespace TechSupport.Models
 
     public class QuestionsIndexViewModel
     {
-        public IEnumerable<QuestionsIndexViewModelItem> Questions {get;set;}
+        public PagedList.IPagedList<QuestionsIndexViewModelItem> Questions {get;set;}
         public int Category { get; set; }
     }
 

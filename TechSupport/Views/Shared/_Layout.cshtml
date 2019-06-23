@@ -31,7 +31,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Questions", "Index", "Questions")</li>
+                    <li>@Html.ActionLink("Questions", "Index", "Questions", new { page = 1 }, null)</li>
                     <li>@Html.ActionLink("Search", "Search", "Questions")</li>
                     @if (Request.IsAuthenticated)
                     {

@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@using PagedList.Mvc
 @model TechSupport.Models.QuestionsIndexViewModel
 
 @{
@@ -111,3 +112,6 @@
         </tr>
     }
 </table>
+
+Page @(Model.Questions.PageCount < Model.Questions.PageNumber ? 0 : Model.Questions.PageNumber) of @Model.Questions.PageCount
+@Html.PagedListPager(Model.Questions, page => Url.Action("Index", new { page }))
