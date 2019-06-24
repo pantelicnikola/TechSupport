@@ -46,6 +46,7 @@
                             <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
                             <li>@Html.ActionLink("Users", "Index", "AspNetUsers")</li>
                             <li>@Html.ActionLink("Create Agent", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                            <li>@Html.ActionLink("Channel Price", "Edit", "ChannelPrices")</li>
                         }
                         if (User.IsInRole("agent"))
                         {

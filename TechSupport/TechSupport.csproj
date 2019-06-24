@@ -244,6 +244,7 @@
     <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\AspNetUsersController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\ChannelPricesController.cs" />
     <Compile Include="Controllers\ChannelsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -449,6 +450,11 @@
     <Content Include="Views\Ratings\Details.cshtml" />
     <Content Include="Views\Ratings\Edit.cshtml" />
     <Content Include="Views\Ratings\Index.cshtml" />
+    <Content Include="Views\ChannelPrices\Create.cshtml" />
+    <Content Include="Views\ChannelPrices\Delete.cshtml" />
+    <Content Include="Views\ChannelPrices\Details.cshtml" />
+    <Content Include="Views\ChannelPrices\Edit.cshtml" />
+    <Content Include="Views\ChannelPrices\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
