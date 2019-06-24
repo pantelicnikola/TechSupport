@@ -215,6 +215,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Startup.Role.cs" />
+    <Compile Include="App_Start\Startup.TokenPackages.cs" />
+    <Compile Include="App_Start\TokenPackagesConfig.cs" />
     <Compile Include="AspNetRole.cs">
       <DependentUpon>Model6local.tt</DependentUpon>
     </Compile>

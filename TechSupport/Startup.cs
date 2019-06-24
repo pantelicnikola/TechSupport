@@ -10,6 +10,7 @@ namespace TechSupport
         {
             ConfigureAuth(app);
             await ConfigureRole();
+            ConfigurTokenPackages();
         }
     }
 }
