@@ -84,13 +84,12 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Text)            
+            @Html.DisplayNameFor(model => model.Text)
         </th >
         <th>
             @Html.DisplayNameFor(model => model.Author)
         </th>
         <th>
-            @*@Html.ActionLink("TimeCreated", "Details", new { id = item.Question.Id, sort = "time" })*@
             @Html.ActionLink("TimeCreated", "Details", new { id = Model.Id, sort = "time" })
         </th>
         <th>
@@ -104,7 +103,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Text)
+                @Html.ActionLink(item.Text, "Details", "Answers", new { id = item.Id }, null)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
@@ -118,7 +117,7 @@
                 }
                 @if (Request.IsAuthenticated)
                 {
-                    @Html.ActionLink("Like ", "Create", "Ratings", new { UserId = User.Identity.GetUserId(), AnswerId = item.Id, Likes = true, QuestionId = Model.Id }, null);
+                    @Html.ActionLink("Like ", "CreateForQuestions", "Ratings", new { UserId = User.Identity.GetUserId(), AnswerId = item.Id, Likes = true, QuestionId = Model.Id }, null);
                 }
                 @Html.DisplayFor(modelItem => likes)
             </td>
@@ -128,7 +127,7 @@
                 }
                 @if (Request.IsAuthenticated)
                 {
-                    @Html.ActionLink("Dislike ", "Create", "Ratings", new { UserId = User.Identity.GetUserId(), AnswerId = item.Id, Likes = false, QuestionId = Model.Id }, null)
+                    @Html.ActionLink("Dislike ", "CreateForQuestions", "Ratings", new { UserId = User.Identity.GetUserId(), AnswerId = item.Id, Likes = false, QuestionId = Model.Id }, null)
                 }
                 @Html.DisplayFor(modelItem => dislikes)
             </td>

@@ -18,7 +18,7 @@ namespace TechSupport.Controllers
         private TechSupport20190613121821_dbEntities db = new TechSupport20190613121821_dbEntities();
 
         // GET: Questions
-        public ActionResult Index(int page)
+        public ActionResult Index(int page = 1)
         {
             ViewBag.Category = new SelectList(db.Categories, "Id", "Name");
             var questions = db.Questions.Include(q => q.Channel1).Include(q => q.Category1);
@@ -130,26 +130,28 @@ namespace TechSupport.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            string sortOrder = (string)TempData["sortOrder"];
-            if (sortOrder != null && sortOrder.Contains(sort) && sortOrder.Contains("desc"))
-            {
-                sortOrder = sort + "_" + "asc";
-            } else
-            {
-                sortOrder = sort + "_" + "desc";
-            }
-            TempData["sortOrder"] = sortOrder;
-
             Question question = 
                 db.Questions
                 .Include(q => q.Answers.Select(a => a.AspNetUser))
-                .Include(q => q.Answers.Select(a => a.Answers1.Select(asd => asd.Answers1.Select(sdf => sdf.Answers1))))
                 .SingleOrDefault(q => q.Id == id);
             if (question == null)
             {
                 return HttpNotFound();
             }
-            question = SortAnswers(question, sortOrder);
+            if (sort != null)
+            {
+                string sortOrder = (string)TempData["sortOrder"];
+                if (sortOrder != null && sortOrder.Contains(sort) && sortOrder.Contains("desc"))
+                {
+                    sortOrder = sort + "_" + "asc";
+                } else
+                {
+                    sortOrder = sort + "_" + "desc";
+                }
+                TempData["sortOrder"] = sortOrder;
+                question = SortAnswers(question, sortOrder);
+            }
+
             return View(question);
         }
 

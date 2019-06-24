@@ -1,4 +1,5 @@
-﻿@model TechSupport.Answer
+﻿@using Microsoft.AspNet.Identity
+@model TechSupport.Answer
 
 @{
     ViewBag.Title = "Details";
@@ -52,7 +53,68 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<hr />
+
+<h2>Answers</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.ActionLink("TimeCreated", "Details", new { id = Model.Id, sort = "time" })
+        </th>
+        <th>
+            @Html.ActionLink("Likes", "Details", new { id = Model.Id, sort = "likes" })
+        </th>
+        <th>
+            @Html.ActionLink("Dislikes", "Details", new { id = Model.Id, sort = "dislikes" })
+        </th>
+    </tr>
+    @foreach (var item in Model.Answers1)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Text, "Details", "Answers", new { id = item.Id }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeCreated)
+            </td>
+            <td>
+                @{
+                    int likes = item.Ratings.Where(r => r.Likes.Equals(true)).Count();
+                }
+                @if (Request.IsAuthenticated)
+                {
+                    @Html.ActionLink("Like ", "CreateForAnswer", "Ratings", new { UserId = User.Identity.GetUserId(), AnswerId = item.Id, Likes = true, QuestionId = Model.Id }, null);
+                }
+                @Html.DisplayFor(modelItem => likes)
+            </td>
+            <td>
+                @{
+                    int dislikes = item.Ratings.Where(r => r.Likes.Equals(false)).Count();
+                }
+                @if (Request.IsAuthenticated)
+                {
+                    @Html.ActionLink("Dislike ", "CreateForAnswer", "Ratings", new { UserId = User.Identity.GetUserId(), AnswerId = item.Id, Likes = false, QuestionId = Model.Id }, null)
+                }
+                @Html.DisplayFor(modelItem => dislikes)
+            </td>
+            <td>
+                @Html.ActionLink("Answer ", "Create", "Answers", new { ReplyOn = item.Id }, null)
+                @if (User.IsInRole("admin"))
+                {
+                    @Html.ActionLink("Delete ", "Delete", "Answers", new { AnswerId = item.Id, QuestionId = Model.Id }, null)
+                }
+            </td>
+        </tr>
+    }
+</table>

@@ -66,7 +66,7 @@ namespace TechSupport.Controllers
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create(string UserId, int AnswerId, bool Likes, int QuestionId)
+        public ActionResult CreateForQuestions(string UserId, int AnswerId, bool Likes, int QuestionId)
         {
             Rating Rating = db.Ratings.Find(UserId, AnswerId);
             if (Rating != null)
@@ -86,6 +86,29 @@ namespace TechSupport.Controllers
             }
             db.SaveChanges();
             return Redirect("/Questions/Details/" + QuestionId);
+        }
+
+        [Authorize]
+        public ActionResult CreateForAnswer(string UserId, int AnswerId, bool Likes, int QuestionId)
+        {
+            Rating Rating = db.Ratings.Find(UserId, AnswerId);
+            if (Rating != null)
+            {
+                Rating.Likes = Likes;
+                db.Entry(Rating).State = EntityState.Modified;
+            }
+            else
+            {
+                Rating = new Rating
+                {
+                    AspNetUser = UserId,
+                    Answer = AnswerId,
+                    Likes = Likes
+                };
+                db.Ratings.Add(Rating);
+            }
+            db.SaveChanges();
+            return Redirect("/Answers/Details/" + QuestionId);
         }
 
         // GET: Ratings/Edit/5

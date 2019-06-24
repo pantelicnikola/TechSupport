@@ -23,18 +23,62 @@ namespace TechSupport.Controllers
         }
 
         // GET: Answers/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string sort)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Answer answer = db.Answers.Find(id);
+            Answer answer = 
+                db.Answers
+                .Include(a => a.Answers1.Select(a1 => a1.AspNetUser))
+                .SingleOrDefault(a => a.Id == id);
             if (answer == null)
             {
                 return HttpNotFound();
             }
+            if (sort != null)
+            {
+                string sortOrder = (string)TempData["sortOrder"];
+                if (sortOrder != null && sortOrder.Contains(sort) && sortOrder.Contains("desc"))
+                {
+                    sortOrder = sort + "_" + "asc";
+                }
+                else
+                {
+                    sortOrder = sort + "_" + "desc";
+                }
+                TempData["sortOrder"] = sortOrder;
+
+            }
+
             return View(answer);
+        }
+
+        public Answer SortAnswers(Answer answer, string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "time_asc":
+                    answer.Answers1 = answer.Answers1.OrderBy(a => a.TimeCreated).ToList();
+                    break;
+                case "time_desc":
+                    answer.Answers1 = answer.Answers1.OrderByDescending(a => a.TimeCreated).ToList();
+                    break;
+                case "likes_asc":
+                    answer.Answers1 = answer.Answers1.OrderBy(a => a.Ratings.Where(r => r.Likes.Equals(true)).Count()).ToList();
+                    break;
+                case "likes_desc":
+                    answer.Answers1 = answer.Answers1.OrderByDescending(a => a.Ratings.Where(r => r.Likes.Equals(true)).Count()).ToList();
+                    break;
+                case "dislikes_asc":
+                    answer.Answers1 = answer.Answers1.OrderBy(a => a.Ratings.Where(r => r.Likes.Equals(false)).Count()).ToList();
+                    break;
+                case "dislikes_desc":
+                    answer.Answers1 = answer.Answers1.OrderByDescending(a => a.Ratings.Where(r => r.Likes.Equals(false)).Count()).ToList();
+                    break;
+            }
+            return answer;
         }
 
         // GET: Answers/Create
@@ -75,41 +119,41 @@ namespace TechSupport.Controllers
         }
 
         // GET: Answers/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Answer answer = db.Answers.Find(id);
-            if (answer == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ReplyOn = new SelectList(db.Answers, "Id", "Author", answer.ReplyOn);
-            ViewBag.Author = new SelectList(db.AspNetUsers, "Id", "Email", answer.Author);
-            ViewBag.Question = new SelectList(db.Questions, "Id", "Title", answer.Question);
-            return View(answer);
-        }
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Answer answer = db.Answers.Find(id);
+        //    if (answer == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.ReplyOn = new SelectList(db.Answers, "Id", "Author", answer.ReplyOn);
+        //    ViewBag.Author = new SelectList(db.AspNetUsers, "Id", "Email", answer.Author);
+        //    ViewBag.Question = new SelectList(db.Questions, "Id", "Title", answer.Question);
+        //    return View(answer);
+        //}
 
-        // POST: Answers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Question,ReplyOn,Author,TimeCreated,Text")] Answer answer)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(answer).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.ReplyOn = new SelectList(db.Answers, "Id", "Author", answer.ReplyOn);
-            ViewBag.Author = new SelectList(db.AspNetUsers, "Id", "Email", answer.Author);
-            ViewBag.Question = new SelectList(db.Questions, "Id", "Title", answer.Question);
-            return View(answer);
-        }
+        //// POST: Answers/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "Id,Question,ReplyOn,Author,TimeCreated,Text")] Answer answer)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(answer).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.ReplyOn = new SelectList(db.Answers, "Id", "Author", answer.ReplyOn);
+        //    ViewBag.Author = new SelectList(db.AspNetUsers, "Id", "Email", answer.Author);
+        //    ViewBag.Question = new SelectList(db.Questions, "Id", "Title", answer.Question);
+        //    return View(answer);
+        //}
 
         // GET: Answers/Delete/5
         //public ActionResult Delete(int? id)
@@ -136,11 +180,20 @@ namespace TechSupport.Controllers
         //    return RedirectToAction("Index");
         //}
 
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(int AnswerId, int QuestionId)
         {
             Answer answer = db.Answers.Include(a => a.Answers1).SingleOrDefault(a => a.Id.Equals(AnswerId));
             DeleteAnswer(answer);
             return Redirect("/Questions/Details/" + QuestionId);
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult Delete(int AnswerId)
+        {
+            Answer answer = db.Answers.Include(a => a.Answers1).SingleOrDefault(a => a.Id.Equals(AnswerId));
+            DeleteAnswer(answer);
+            return Redirect("/Answers/Details/" + AnswerId);
         }
 
         public void DeleteAnswer(Answer answer)
