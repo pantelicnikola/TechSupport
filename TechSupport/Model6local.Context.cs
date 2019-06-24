@@ -16,7 +16,7 @@ namespace TechSupport
     public partial class TechSupport20190613121821_dbEntities : DbContext
     {
         public TechSupport20190613121821_dbEntities()
-            : base("name=TechSupport20190613121821_dbEntities7")
+            : base("name=TechSupport20190613121821_dbEntities8")
         {
         }
     
@@ -32,8 +32,12 @@ namespace TechSupport
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<ChannelPrice> ChannelPrices { get; set; }
         public virtual DbSet<Channel> Channels { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
+        public virtual DbSet<TokenOrder> TokenOrders { get; set; }
+        public virtual DbSet<TokenPackage> TokenPackages { get; set; }
     }
 }

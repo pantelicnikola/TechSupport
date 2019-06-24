@@ -96,6 +96,13 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="ChannelPrice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumTokens" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Channels">
           <Key>
             <PropertyRef Name="Id" />
@@ -106,6 +113,16 @@
           <Property Name="Creator" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Closed" Type="bit" Nullable="false" />
           <Property Name="Price" Type="int" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Channel" Type="int" Nullable="false" />
+          <Property Name="Sender" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="TimeCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Questions">
           <Key>
@@ -131,6 +148,24 @@
           <Property Name="AspNetUser" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Answer" Type="int" Nullable="false" />
           <Property Name="Likes" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TokenOrders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Buyer" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="NumTokens" Type="int" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TokenPackages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="NumTokens" Type="int" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_AgentChannel_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -262,6 +297,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Messages_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="Sender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Channels">
+          <End Role="Channels" Type="Self.Channels" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="Channel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Questions_Categories">
           <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
           <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
@@ -312,6 +371,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TokenOrders_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="TokenOrders" Type="Self.TokenOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TokenOrders">
+              <PropertyRef Name="Buyer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="TechSupport20190613121821_dbModel1StoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AgentChannel" EntityType="Self.AgentChannel" Schema="dbo" store:Type="Tables" />
@@ -322,9 +393,13 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChannelPrice" EntityType="Self.ChannelPrice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Channels" EntityType="Self.Channels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TokenOrders" EntityType="Self.TokenOrders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TokenPackages" EntityType="Self.TokenPackages" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AgentChannel_AspNetUsers" Association="Self.FK_AgentChannel_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AgentChannel" EntitySet="AgentChannel" />
@@ -365,6 +440,14 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Messages_AspNetUsers" Association="Self.FK_Messages_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Channels" Association="Self.FK_Messages_Channels">
+            <End Role="Channels" EntitySet="Channels" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
           <AssociationSet Name="FK_Questions_Categories" Association="Self.FK_Questions_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Questions" EntitySet="Questions" />
@@ -380,6 +463,10 @@
           <AssociationSet Name="FK_Ratings_AspNetUsers" Association="Self.FK_Ratings_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TokenOrders_AspNetUsers" Association="Self.FK_TokenOrders_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="TokenOrders" EntitySet="TokenOrders" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -466,7 +553,9 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Channels" Relationship="Self.FK_Channel_AspNetUsers" FromRole="AspNetUsers" ToRole="Channels" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Messages_AspNetUsers" FromRole="AspNetUsers" ToRole="Messages" />
           <NavigationProperty Name="Ratings" Relationship="Self.FK_Ratings_AspNetUsers" FromRole="AspNetUsers" ToRole="Ratings" />
+          <NavigationProperty Name="TokenOrders" Relationship="Self.FK_TokenOrders_AspNetUsers" FromRole="AspNetUsers" ToRole="TokenOrders" />
           <NavigationProperty Name="Channels1" Relationship="Self.AgentChannel" FromRole="AspNetUsers" ToRole="Channels" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
@@ -477,6 +566,13 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Questions" Relationship="Self.FK_Questions_Categories" FromRole="Categories" ToRole="Questions" />
+        </EntityType>
+        <EntityType Name="ChannelPrice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumTokens" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Channel">
           <Key>
@@ -489,8 +585,21 @@
           <Property Name="Closed" Type="Boolean" Nullable="false" />
           <Property Name="Price" Type="Int32" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Channel_AspNetUsers" FromRole="Channels" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Messages_Channels" FromRole="Channels" ToRole="Messages" />
           <NavigationProperty Name="Questions" Relationship="Self.FK_Questions_Channel" FromRole="Channels" ToRole="Questions" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.AgentChannel" FromRole="Channels" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Channel" Type="Int32" Nullable="false" />
+          <Property Name="Sender" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TimeCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Messages_AspNetUsers" FromRole="Messages" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Channel1" Relationship="Self.FK_Messages_Channels" FromRole="Messages" ToRole="Channels" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -521,6 +630,25 @@
           <Property Name="Likes" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Answer1" Relationship="Self.FK_Ratings_Answers" FromRole="Ratings" ToRole="Answers" />
           <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_Ratings_AspNetUsers" FromRole="Ratings" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="TokenOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Buyer" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumTokens" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_TokenOrders_AspNetUsers" FromRole="TokenOrders" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="TokenPackage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumTokens" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Answer_Answer1">
           <End Role="Answers" Type="Self.Answer" Multiplicity="0..1" />
@@ -614,6 +742,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Messages_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="Sender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Ratings_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
           <End Role="Ratings" Type="Self.Rating" Multiplicity="*" />
@@ -626,6 +766,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TokenOrders_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="TokenOrders" Type="Self.TokenOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TokenOrders">
+              <PropertyRef Name="Buyer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Questions_Categories">
           <End Role="Categories" Type="Self.Category" Multiplicity="1" />
           <End Role="Questions" Type="Self.Question" Multiplicity="*" />
@@ -635,6 +787,18 @@
             </Principal>
             <Dependent Role="Questions">
               <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Channels">
+          <End Role="Channels" Type="Self.Channel" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="Channel" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -658,7 +822,7 @@
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="TechSupport20190613121821_dbEntities7" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TechSupport20190613121821_dbEntities8" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="Answers" EntityType="Self.Answer" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
@@ -666,9 +830,13 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="ChannelPrices" EntityType="Self.ChannelPrice" />
           <EntitySet Name="Channels" EntityType="Self.Channel" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="Questions" EntityType="Self.Question" />
           <EntitySet Name="Ratings" EntityType="Self.Rating" />
+          <EntitySet Name="TokenOrders" EntityType="Self.TokenOrder" />
+          <EntitySet Name="TokenPackages" EntityType="Self.TokenPackage" />
           <AssociationSet Name="FK_Answer_Answer1" Association="Self.FK_Answer_Answer1">
             <End Role="Answers" EntitySet="Answers" />
             <End Role="Answers1" EntitySet="Answers" />
@@ -697,13 +865,25 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Channels" EntitySet="Channels" />
           </AssociationSet>
+          <AssociationSet Name="FK_Messages_AspNetUsers" Association="Self.FK_Messages_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
           <AssociationSet Name="FK_Ratings_AspNetUsers" Association="Self.FK_Ratings_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Ratings" EntitySet="Ratings" />
           </AssociationSet>
+          <AssociationSet Name="FK_TokenOrders_AspNetUsers" Association="Self.FK_TokenOrders_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="TokenOrders" EntitySet="TokenOrders" />
+          </AssociationSet>
           <AssociationSet Name="FK_Questions_Categories" Association="Self.FK_Questions_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Channels" Association="Self.FK_Messages_Channels">
+            <End Role="Channels" EntitySet="Channels" />
+            <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK_Questions_Channel" Association="Self.FK_Questions_Channel">
             <End Role="Channels" EntitySet="Channels" />
@@ -723,7 +903,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TechSupport20190613121821_dbModel1StoreContainer" CdmEntityContainer="TechSupport20190613121821_dbEntities7">
+        <EntityContainerMapping StorageEntityContainer="TechSupport20190613121821_dbModel1StoreContainer" CdmEntityContainer="TechSupport20190613121821_dbEntities8">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -803,6 +983,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ChannelPrices">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.ChannelPrice">
+              <MappingFragment StoreEntitySet="ChannelPrice">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NumTokens" ColumnName="NumTokens" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Channels">
             <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.Channel">
               <MappingFragment StoreEntitySet="Channels">
@@ -812,6 +1000,17 @@
                 <ScalarProperty Name="Creator" ColumnName="Creator" />
                 <ScalarProperty Name="Closed" ColumnName="Closed" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.Message">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Sender" ColumnName="Sender" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -838,6 +1037,26 @@
                 <ScalarProperty Name="AspNetUser" ColumnName="AspNetUser" />
                 <ScalarProperty Name="Answer" ColumnName="Answer" />
                 <ScalarProperty Name="Likes" ColumnName="Likes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TokenOrders">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.TokenOrder">
+              <MappingFragment StoreEntitySet="TokenOrders">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Buyer" ColumnName="Buyer" />
+                <ScalarProperty Name="NumTokens" ColumnName="NumTokens" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TokenPackages">
+            <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.TokenPackage">
+              <MappingFragment StoreEntitySet="TokenPackages">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NumTokens" ColumnName="NumTokens" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
