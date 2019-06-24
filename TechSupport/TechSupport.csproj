@@ -209,11 +209,13 @@
       <DependentUpon>Model6local.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\ChannelPriceConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RoleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\Startup.ChannelPrice.cs" />
     <Compile Include="App_Start\Startup.Role.cs" />
     <Compile Include="App_Start\Startup.TokenPackages.cs" />
     <Compile Include="App_Start\TokenPackagesConfig.cs" />

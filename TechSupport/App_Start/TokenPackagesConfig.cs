@@ -9,10 +9,7 @@ namespace TechSupport.App_Start
     public class TokenPackagesConfig
     {
         private TechSupport20190613121821_dbEntities db = new TechSupport20190613121821_dbEntities();
-        public TokenPackagesConfig()
-        {
-
-        }
+        public TokenPackagesConfig() {}
 
         public void EnsureSeedData()
         {
