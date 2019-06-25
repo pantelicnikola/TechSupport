@@ -39,8 +39,8 @@
                         {
                             @*<li>@Html.ActionLink("My Questions", "MyQuestions", "Questions")</li>
                             <li>@Html.ActionLink("New Question", "Create", "Questions")</li>*@
-                            <li>@Html.ActionLink("New Channel", "Create", "Channels")</li>
-                            <li>@Html.ActionLink("Get Tokens", "Create", "TokenOrders")</li>
+                            <li>@Html.ActionLink("Channels", "MyChannels", "Channels")</li>
+                            <li>@Html.ActionLink("Buy Tokens", "Create", "TokenOrders")</li>
                             <li>@Html.ActionLink("My Orders", "MyOrders", "TokenOrders")</li>
                         }
                         if (User.IsInRole("admin"))
@@ -53,7 +53,7 @@
                         }
                         if (User.IsInRole("agent"))
                         {
-
+                            <li>@Html.ActionLink("Channels", "AllChannels", "Channels")</li>
                         }
                     }                    
                 </ul>

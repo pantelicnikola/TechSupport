@@ -1,10 +1,11 @@
-﻿@model IEnumerable<TechSupport.Channel>
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<TechSupport.Channel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "My Channels";
 }
 
-<h2>Index</h2>
+<h2>My Channels</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -18,9 +19,6 @@
             @Html.DisplayNameFor(model => model.TimeCreated)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Closed)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
         <th>
@@ -29,7 +27,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -38,18 +37,13 @@
             @Html.DisplayFor(modelItem => item.TimeCreated)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Closed)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AspNetUser.Email)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Close", "Close", new { id = item.Id })
         </td>
     </tr>
 }

@@ -443,7 +443,7 @@
     <Content Include="Views\Channels\Delete.cshtml" />
     <Content Include="Views\Channels\Details.cshtml" />
     <Content Include="Views\Channels\Edit.cshtml" />
-    <Content Include="Views\Channels\Index.cshtml" />
+    <Content Include="Views\Channels\MyChannels.cshtml" />
     <Content Include="Views\Questions\Search.cshtml" />
     <Content Include="Views\Questions\MyQuestions.cshtml" />
     <Content Include="Views\Shared\AnswerModal.cshtml" />
@@ -468,6 +468,7 @@
     <Content Include="Views\TokenOrders\Edit.cshtml" />
     <Content Include="Views\TokenOrders\Index.cshtml" />
     <Content Include="Views\TokenOrders\MyOrders.cshtml" />
+    <Content Include="Views\Channels\AllChannels.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
