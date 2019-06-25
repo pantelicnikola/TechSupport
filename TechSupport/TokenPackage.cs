@@ -14,9 +14,18 @@ namespace TechSupport
     
     public partial class TokenPackage
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TokenPackage()
+        {
+            this.TokenOrders = new HashSet<TokenOrder>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public int NumTokens { get; set; }
         public int Price { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TokenOrder> TokenOrders { get; set; }
     }
 }

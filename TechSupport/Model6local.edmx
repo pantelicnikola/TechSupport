@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TechSupport20190613121821_dbModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TechSupport20190613121821_dbModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -157,6 +157,7 @@
           <Property Name="Buyer" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="NumTokens" Type="int" Nullable="false" />
           <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="TokenPackage" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TokenPackages">
           <Key>
@@ -383,6 +384,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TokenOrders_TokenPackages">
+          <End Role="TokenPackages" Type="Self.TokenPackages" Multiplicity="1" />
+          <End Role="TokenOrders" Type="Self.TokenOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TokenPackages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TokenOrders">
+              <PropertyRef Name="TokenPackage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="TechSupport20190613121821_dbModel1StoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AgentChannel" EntityType="Self.AgentChannel" Schema="dbo" store:Type="Tables" />
@@ -468,9 +481,12 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="TokenOrders" EntitySet="TokenOrders" />
           </AssociationSet>
+          <AssociationSet Name="FK_TokenOrders_TokenPackages" Association="Self.FK_TokenOrders_TokenPackages">
+            <End Role="TokenPackages" EntitySet="TokenPackages" />
+            <End Role="TokenOrders" EntitySet="TokenOrders" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TechSupport20190613121821_dbModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -640,6 +656,8 @@
           <Property Name="NumTokens" Type="Int32" Nullable="false" />
           <Property Name="Price" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_TokenOrders_AspNetUsers" FromRole="TokenOrders" ToRole="AspNetUsers" />
+          <Property Name="TokenPackage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TokenPackage1" Relationship="TechSupport20190613121821_dbModel1.FK_TokenOrders_TokenPackages" FromRole="TokenOrder" ToRole="TokenPackage" />
         </EntityType>
         <EntityType Name="TokenPackage">
           <Key>
@@ -649,6 +667,7 @@
           <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NumTokens" Type="Int32" Nullable="false" />
           <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TokenOrders" Relationship="TechSupport20190613121821_dbModel1.FK_TokenOrders_TokenPackages" FromRole="TokenPackage" ToRole="TokenOrder" />
         </EntityType>
         <Association Name="FK_Answer_Answer1">
           <End Role="Answers" Type="Self.Answer" Multiplicity="0..1" />
@@ -897,7 +916,23 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <AssociationSet Name="FK_TokenOrders_TokenPackages" Association="TechSupport20190613121821_dbModel1.FK_TokenOrders_TokenPackages">
+            <End Role="TokenPackage" EntitySet="TokenPackages" />
+            <End Role="TokenOrder" EntitySet="TokenOrders" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_TokenOrders_TokenPackages">
+          <End Type="TechSupport20190613121821_dbModel1.TokenPackage" Role="TokenPackage" Multiplicity="1" />
+          <End Type="TechSupport20190613121821_dbModel1.TokenOrder" Role="TokenOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TokenPackage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TokenOrder">
+              <PropertyRef Name="TokenPackage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1043,6 +1078,7 @@
           <EntitySetMapping Name="TokenOrders">
             <EntityTypeMapping TypeName="TechSupport20190613121821_dbModel1.TokenOrder">
               <MappingFragment StoreEntitySet="TokenOrders">
+                <ScalarProperty Name="TokenPackage" ColumnName="TokenPackage" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Buyer" ColumnName="Buyer" />
                 <ScalarProperty Name="NumTokens" ColumnName="NumTokens" />

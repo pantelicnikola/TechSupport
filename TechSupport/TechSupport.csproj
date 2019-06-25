@@ -250,6 +250,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
+    <Compile Include="Controllers\TokenOrdersController.cs" />
     <Compile Include="Controllers\TokenPackagesController.cs" />
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>Model6local.tt</DependentUpon>
@@ -461,6 +462,12 @@
     <Content Include="Views\TokenPackages\Details.cshtml" />
     <Content Include="Views\TokenPackages\Edit.cshtml" />
     <Content Include="Views\TokenPackages\Index.cshtml" />
+    <Content Include="Views\TokenOrders\Create.cshtml" />
+    <Content Include="Views\TokenOrders\Delete.cshtml" />
+    <Content Include="Views\TokenOrders\Details.cshtml" />
+    <Content Include="Views\TokenOrders\Edit.cshtml" />
+    <Content Include="Views\TokenOrders\Index.cshtml" />
+    <Content Include="Views\TokenOrders\MyOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -24,7 +24,7 @@ namespace TechSupport.App_Start
 
                 TokenPackage GoldPackage = new TokenPackage
                 {
-                    Name = "silver",
+                    Name = "gold",
                     NumTokens = 50,
                     Price = 100
                 };

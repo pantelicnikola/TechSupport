@@ -18,7 +18,9 @@ namespace TechSupport
         public string Buyer { get; set; }
         public int NumTokens { get; set; }
         public int Price { get; set; }
+        public int TokenPackage { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual TokenPackage TokenPackage1 { get; set; }
     }
 }
