@@ -13,9 +13,9 @@ namespace TechSupport
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TechSupport20190613121821_dbEntities : DbContext
+    public partial class TechSupport20190613121821_dbEntities1 : DbContext
     {
-        public TechSupport20190613121821_dbEntities()
+        public TechSupport20190613121821_dbEntities1()
             : base("name=TechSupport20190613121821_dbEntities8")
         {
         }

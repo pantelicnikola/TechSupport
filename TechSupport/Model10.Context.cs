@@ -13,10 +13,10 @@ namespace TechSupport
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TechSupport20190613121821_dbEntities4 : DbContext
+    public partial class TechSupport20190613121821_dbEntities : DbContext
     {
-        public TechSupport20190613121821_dbEntities4()
-            : base("name=TechSupport20190613121821_dbEntities4")
+        public TechSupport20190613121821_dbEntities()
+            : base("name=TechSupport20190613121821_dbEntities10")
         {
         }
     
@@ -31,7 +31,13 @@ namespace TechSupport
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<ChannelPrice> ChannelPrices { get; set; }
         public virtual DbSet<Channel> Channels { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
+        public virtual DbSet<TokenOrder> TokenOrders { get; set; }
+        public virtual DbSet<TokenPackage> TokenPackages { get; set; }
     }
 }

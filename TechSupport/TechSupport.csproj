@@ -206,7 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Answer.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\ChannelPriceConfig.cs" />
@@ -220,25 +220,25 @@
     <Compile Include="App_Start\Startup.TokenPackages.cs" />
     <Compile Include="App_Start\TokenPackagesConfig.cs" />
     <Compile Include="AspNetRole.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUser.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserClaim.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserLogin.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="Category.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="Channel.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="ChannelPrice.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswersController.cs" />
@@ -253,15 +253,30 @@
     <Compile Include="Controllers\TokenOrdersController.cs" />
     <Compile Include="Controllers\TokenPackagesController.cs" />
     <Compile Include="C__MigrationHistory.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Message.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model10.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model10.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model10.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model10.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model10.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model10.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Model6local.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -277,21 +292,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model6local.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Model8.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model8.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model8.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model8.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model8.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model8.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AnswerModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -299,17 +299,17 @@
     <Compile Include="Models\QuestionModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="Rating.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TokenOrder.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
     <Compile Include="TokenPackage.cs">
-      <DependentUpon>Model6local.tt</DependentUpon>
+      <DependentUpon>Model10.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -320,6 +320,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Model10.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model10.edmx</DependentUpon>
+      <LastGenOutput>Model10.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model10.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model10.edmx</DependentUpon>
+      <LastGenOutput>Model10.cs</LastGenOutput>
+    </Content>
     <Content Include="Model6local.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model6local.edmx</DependentUpon>
@@ -330,16 +340,6 @@
       <DependentUpon>Model6local.edmx</DependentUpon>
       <LastGenOutput>Model6local.cs</LastGenOutput>
     </Content>
-    <Content Include="Model8.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model8.edmx</DependentUpon>
-      <LastGenOutput>Model8.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model8.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model8.edmx</DependentUpon>
-      <LastGenOutput>Model8.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -347,19 +347,19 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Model8.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model8.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Model8.edmx.diagram">
-      <DependentUpon>Model8.edmx</DependentUpon>
-    </Content>
     <EntityDeploy Include="Model6local.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model6local.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Model6local.edmx.diagram">
       <DependentUpon>Model6local.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Model10.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model10.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Model10.edmx.diagram">
+      <DependentUpon>Model10.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\TechSupport20190613121821 - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\TechSupport20190613121821 - FTP %283%29.pubxml" />
