@@ -1,11 +1,10 @@
-﻿@using Microsoft.AspNet.Identity
-@model IEnumerable<TechSupport.Channel>
+﻿@model IEnumerable<TechSupport.Channel>
 
 @{
     ViewBag.Title = "My Channels";
 }
 
-<h2>My Channels</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")

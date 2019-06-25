@@ -88,17 +88,24 @@ namespace TechSupport.Controllers
                 AspNetUser user = db.AspNetUsers.Find(User.Identity.GetUserId());
                 int channelPrice = db.ChannelPrices.First().NumTokens;
 
-                channel.Closed = false;
-                channel.Creator = user.Id;
-                channel.TimeCreated = DateTime.Now;
-                channel.Price = 0;
-                db.Channels.Add(channel);
+                if (user.Tokens < channelPrice)
+                {
+                    return View("NeedMoreGold");
+                }
+                else
+                {
+                    channel.Closed = false;
+                    channel.Creator = user.Id;
+                    channel.TimeCreated = DateTime.Now;
+                    channel.Price = channelPrice;
+                    db.Channels.Add(channel);
 
-                user.Tokens -= channelPrice;
-                db.Entry(user).State = EntityState.Modified;
+                    user.Tokens -= channelPrice;
+                    db.Entry(user).State = EntityState.Modified;
                 
-                db.SaveChanges();
-                return RedirectToAction("MyChannels");
+                    db.SaveChanges();
+                    return RedirectToAction("MyChannels");
+                }
             }
 
             ViewBag.Creator = new SelectList(db.AspNetUsers, "Id", "Email", channel.Creator);

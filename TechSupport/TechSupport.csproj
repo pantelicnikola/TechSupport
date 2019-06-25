@@ -469,6 +469,7 @@
     <Content Include="Views\TokenOrders\Index.cshtml" />
     <Content Include="Views\TokenOrders\MyOrders.cshtml" />
     <Content Include="Views\Channels\AllChannels.cshtml" />
+    <Content Include="Views\Channels\NeedMoreGold.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
