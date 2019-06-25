@@ -64,11 +64,16 @@ namespace TechSupport.Controllers
         {
             if (ModelState.IsValid)
             {
-                tokenOrder.Buyer = User.Identity.GetUserId();
                 TokenPackage selectedPackage = db.TokenPackages.Find(tokenOrder.TokenPackage);
+                AspNetUser buyer = db.AspNetUsers.Find(User.Identity.GetUserId());
                 tokenOrder.Price = selectedPackage.Price;
                 tokenOrder.NumTokens = selectedPackage.NumTokens;
+                tokenOrder.Buyer = buyer.Id;
                 db.TokenOrders.Add(tokenOrder);
+
+                buyer.Tokens += selectedPackage.NumTokens;
+                db.Entry(buyer).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return RedirectToAction("MyOrders");
             }
