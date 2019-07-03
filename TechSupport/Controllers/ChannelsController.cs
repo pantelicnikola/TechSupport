@@ -52,20 +52,21 @@ namespace TechSupport.Controllers
             return RedirectToAction("AllChannels");
         }
 
-        // GET: Channels/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Channel channel = db.Channels.Find(id);
-        //    if (channel == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(channel);
-        //}
+        //GET: Channels/Details/5
+        [Authorize(Roles = "user")]
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Channel channel = db.Channels.Find(id);
+            if (channel == null)
+            {
+                return HttpNotFound();
+            }
+            return View(channel);
+        }
 
         // GET: Channels/Create
         [Authorize(Roles = "user")]

@@ -8,6 +8,7 @@ namespace TechSupport
     {
         public async void Configuration(IAppBuilder app)
         {
+            app.MapSignalR();
             ConfigureAuth(app);
             await ConfigureRole();
             ConfigurTokenPackages();

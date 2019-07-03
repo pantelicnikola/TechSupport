@@ -52,7 +52,49 @@
 
     </dl>
 </div>
+
+<hr />
+
+<div class="container">
+    <input type="text" id="message"/>
+    <input type="button" id="sendMessage" value="send"/>
+    <ul id="discussion"></ul>
+
+
+</div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+@section scripts {
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>    
+    <script type="text/javascript">
+        $(function () {
+
+            var chat = $.connection.myHub;;
+            chat.client.add = new function (name, message) {
+                $('#discussion').append('<li><strong>' + htmlEncode(name) + '</strong>' + htmlEncode(message) + '</li>');
+                $('#message').focus();
+                
+            }
+
+            $.connection.hub.start().done(function () {
+                console.log('started');
+                $('#sendMessage').click(function () {
+                    console.log('clicked');
+                    chat.server.send('asdasd', $('message').val());
+                    console.log('sent');
+                });
+            });
+        });
+
+        function htmlEncode(value) {
+            var encodedValue = $('<div/>').text(value).html();
+            return encodedValue;
+        }
+    </script>
+}
