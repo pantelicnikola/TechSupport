@@ -27,7 +27,14 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @if (item.AspNetUsers.Where(u => u.Id == UserId).Any())
+                {
+                    @Html.ActionLink(item.Name, "Details", new { id = item.Id })
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Name)
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TimeCreated)

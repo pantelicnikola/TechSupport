@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TechSupport;
+using TechSupport.Models;
+using TechSupport.signalr.hubs;
 
 namespace TechSupport.Controllers
 {
@@ -52,20 +54,40 @@ namespace TechSupport.Controllers
             return RedirectToAction("AllChannels");
         }
 
+        [Authorize]
+        public ActionResult SendMessage(ChannelModel model, int channelId)
+        {
+            Message msg = new Message
+            {
+                Channel = channelId,
+                Sender = User.Identity.GetUserId(),
+                Text = model.message,
+                TimeCreated = System.DateTime.Now
+            };
+            db.Messages.Add(msg);
+            db.SaveChanges();
+            MyHub.Send(User.Identity.GetUserName(), model.message);
+            return RedirectToAction("Details", new { id = channelId});
+        }
+
         //GET: Channels/Details/5
-        [Authorize(Roles = "user")]
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Channel channel = db.Channels.Find(id);
-            if (channel == null)
+            Channel c = db.Channels.Find(id);
+            if (c == null)
             {
                 return HttpNotFound();
             }
-            return View(channel);
+            ChannelModel model = new ChannelModel
+            {
+                channel = c
+            };
+            return View(model);
         }
 
         // GET: Channels/Create
