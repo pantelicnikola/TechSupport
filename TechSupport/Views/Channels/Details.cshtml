@@ -1,8 +1,89 @@
-﻿@model TechSupport.Models.ChannelModel
+﻿@using Microsoft.AspNet.Identity;
+@using TechSupport.Models;
+@using Microsoft.AspNet.Identity.EntityFramework;
+@model TechSupport.Models.ChannelModel
 
 @{
     ViewBag.Title = "Details";
+    ApplicationDbContext userscontext = new ApplicationDbContext();
+    var userStore = new UserStore<ApplicationUser>(userscontext);
+    var userManager = new UserManager<ApplicationUser>(userStore);
 }
+
+<style type="text/css">
+    .chatBoxLeft {
+        width: 300px;
+        margin: 20px;
+        margin-left: 0;
+        margin-right: auto;
+        background: #00bfb6;
+        padding: 20px;
+        text-align: left;
+        font-weight: 900;
+        color: #fff;
+        font-family: arial;
+        position:relative;
+        /*float:left;
+        clear:both;*/
+        /*display:block;*/
+    }
+
+    .chatBoxRight {
+        width: 300px;
+        margin: 20px;
+        margin-left: auto;
+        margin-right: 0;
+        border: 4px solid #00bfb6;
+        padding: 20px;
+        text-align: right;
+        font-weight: 900;
+        color: #00bfb6;
+        font-family: arial;
+        position: relative;
+        /*float:right;
+        clear:both;*/
+        /*display:block;*/
+    }
+
+    .chatBoxLeft:before {
+        content: "";
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        border-left: 10px solid #00bfb6;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #00bfb6;
+        border-bottom: 10px solid transparent;
+        right: -20px;
+        top: 6px;
+    }
+
+    .chatBoxRight:before {
+        content: "";
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        border-left: 10px solid transparent;
+        border-right: 10px solid #00bfb6;
+        border-top: 10px solid #00bfb6;
+        border-bottom: 10px solid transparent;
+        left: -21px;
+        top: 6px;
+    }
+
+    .chatBoxRight:after {
+        content: "";
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        border-left: 7px solid transparent;
+        border-right: 7px solid #fff;
+        border-top: 7px solid #fff;
+        border-bottom: 7px solid transparent;
+        left: -11px;
+        top: 10px;
+    }
+</style>
 
 <h2>Details</h2>
 
@@ -58,47 +139,63 @@
 </p>
 <hr />
 
-@*<div class="container">
-    <input type="text" id="message"/>
-    <input type="button" id="sendMessage" value="send"/>
-    <ul id="discussion"></ul>
-
-
-</div>*@
-
-
 
 @using (Html.BeginForm("SendMessage", "Channels", new { channelId = Model.channel.Id }, FormMethod.Post, null))
 {
-    @*@Html.TextBox()*@
-    @Html.TextBoxFor(m => m.message, new { @class = "form-control", autocomplete = "off" })
-    <input type="submit" value="Bid" class="bid btn btn-primary btn-sm" /> 
+    <div class="form-horizontal">
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.message, new { @class = "form-control", autocomplete = "off", placeholder = "Text" })
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Send" class="btn btn-primary btn-sm" />
+            </div>
+        </div>
+    </div>
 }
 
-<ul id="discussion">
+@*<ul id="discussion">
     @foreach (var item in Model.channel.Messages)
     {
         <li>
-            <strong>@item.AspNetUser.UserName</strong>
-            @item.Text
+            <strong>@item.AspNetUser.UserName</strong> : @item.Text
+            @item.TimeCreated
         </li>
-        //item.AspNetUser.UserName
-        //item.Text
-        //item.TimeCreated
     }
-</ul>
+</ul>*@
+
+@*<div class="chatBoxLeft">I'm speech bubble</div>
+<div class="chatBoxRight">I'm speech bubble</div>
+<div class="chatBoxLeft">I'm speech bubble</div>
+<div class="chatBoxRight">I'm speech bubble</div>*@
+
+<div id="discussion">
+    @foreach (var item in Model.channel.Messages)
+    {
+        if (!userManager.IsInRole(item.Sender, "user"))
+        {
+            <div class="chatBoxLeft">@item.Text</div>
+        }
+        else
+        {
+            <div class="chatBoxRight">@item.Text</div>
+        }
+    }
+</div>
 
 
 @section scripts {
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
-    <script src="~/signalr/hubs/"></script>    
+    <script src="~/signalr/hubs/"></script>
     <script type="text/javascript">
         $(function () {
             var chat = $.connection.myHub;
             chat.client.addNewMessage = function (name, message) {
                 $('#discussion').append('<li><strong>' + htmlEncode(name) + '</strong>: ' + htmlEncode(message) + '</li>');
-                $('#message').focus();                
+                $('#message').focus();
             }
 
             $.connection.hub.start().done(function () {
