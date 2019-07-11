@@ -23,9 +23,6 @@
         color: #fff;
         font-family: arial;
         position:relative;
-        /*float:left;
-        clear:both;*/
-        /*display:block;*/
     }
 
     .chatBoxRight {
@@ -40,9 +37,6 @@
         color: #00bfb6;
         font-family: arial;
         position: relative;
-        /*float:right;
-        clear:both;*/
-        /*display:block;*/
     }
 
     .chatBoxLeft:before {
@@ -156,31 +150,24 @@
     </div>
 }
 
-@*<ul id="discussion">
-    @foreach (var item in Model.channel.Messages)
-    {
-        <li>
-            <strong>@item.AspNetUser.UserName</strong> : @item.Text
-            @item.TimeCreated
-        </li>
-    }
-</ul>*@
-
-@*<div class="chatBoxLeft">I'm speech bubble</div>
-<div class="chatBoxRight">I'm speech bubble</div>
-<div class="chatBoxLeft">I'm speech bubble</div>
-<div class="chatBoxRight">I'm speech bubble</div>*@
-
 <div id="discussion">
     @foreach (var item in Model.channel.Messages)
     {
         if (!userManager.IsInRole(item.Sender, "user"))
         {
-            <div class="chatBoxLeft">@item.Text</div>
+            <div class="chatBoxLeft">
+                <strong>@item.AspNetUser.UserName</strong>
+                <br />
+                @item.Text
+            </div>
         }
         else
         {
-            <div class="chatBoxRight">@item.Text</div>
+            <div class="chatBoxRight">
+                <strong>@item.AspNetUser.UserName</strong>
+                <br />
+                @item.Text
+            </div>
         }
     }
 </div>
@@ -192,9 +179,32 @@
     <script src="~/signalr/hubs/"></script>
     <script type="text/javascript">
         $(function () {
+
+            //var userscontext = new ApplicationDbContext();
+            //var userStore = new UserStore<ApplicationUser>(userscontext);
+            //var userManager = new UserManager<ApplicationUser>(userStore);
+
             var chat = $.connection.myHub;
-            chat.client.addNewMessage = function (name, message) {
-                $('#discussion').append('<li><strong>' + htmlEncode(name) + '</strong>: ' + htmlEncode(message) + '</li>');
+            chat.client.addNewMessage = function (name, message, role) {
+                if (role == 'user') {
+                    $('#discussion').prepend(
+                        '<div class="chatBoxRight">' +
+                        '<strong>' +
+                        name +
+                        '</strong><br />' +
+                        message +
+                        '</div>');
+                } else {
+                    $('#discussion').prepend(
+                        '<div class="chatBoxLeft">' +
+                        '<strong>' +
+                        name +
+                        '</strong><br />' +
+                        message +
+                        '</div>');
+                }
+
+                //$('#discussion').append('<li><strong>' + htmlEncode(name) + '</strong>: ' + htmlEncode(message) + '</li>');
                 $('#message').focus();
             }
 
@@ -210,9 +220,9 @@
             });
         });
 
-        function htmlEncode(value) {
-            var encodedValue = $('<div />').text(value).html();
-            return encodedValue;
-        }
+        //function htmlEncode(value) {
+        //    var encodedValue = $('<div />').text(value).html();
+        //    return encodedValue;
+        //}
     </script>
 }

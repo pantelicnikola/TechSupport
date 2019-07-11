@@ -8,10 +8,10 @@ namespace TechSupport.signalr.hubs
 {
     public class MyHub : Hub
     {
-        public static void Send(string name, string message)
+        public static void Send(string name, string message, string role)
         {
             IHubContext hc = GlobalHost.ConnectionManager.GetHubContext<MyHub>();
-            hc.Clients.All.addNewMessage(name, message);
+            hc.Clients.All.addNewMessage(name, message, role);
         }
     }
 }

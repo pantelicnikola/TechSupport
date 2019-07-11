@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -66,7 +67,12 @@ namespace TechSupport.Controllers
             };
             db.Messages.Add(msg);
             db.SaveChanges();
-            MyHub.Send(User.Identity.GetUserName(), model.message);
+
+            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            string userId = User.Identity.GetUserId();
+            List<string> roles = userManager.GetRoles(userId).ToList();
+
+            MyHub.Send(User.Identity.GetUserName(), model.message, roles[0]);
             return RedirectToAction("Details", new { id = channelId});
         }
 
@@ -79,6 +85,7 @@ namespace TechSupport.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Channel c = db.Channels.Find(id);
+            c.Messages = c.Messages.OrderByDescending(m => m.TimeCreated).ToList();
             if (c == null)
             {
                 return HttpNotFound();
